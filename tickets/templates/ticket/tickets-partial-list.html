@@ -1,0 +1,74 @@
+{% load static %}
+{% if tickets.count > 0  %}
+
+    <div class="container-fluid">
+    <table class="table is-centered is-hoverable is-fullwidth">
+            <thead>
+            <tr>
+                <th scope="col" class="tbl-header">Title</th>
+                <th scope="col">Client</th>
+                <th scope="col">Category</th>
+                <th scope="col">Sub-Categqory</th>
+                <th scope="col">Status</th>
+                <th scope="col">Duration</th>
+                <th scope="col">Assigned to</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            {% for ticket in page_obj %}
+                <tbody>
+                <tr>
+                    <td><a href="{% url 'ticket-detail' ticket.ticket_id %}">{{ ticket.title }}</a></td>
+                    <td><a class="tag is-info" href= "">{{ ticket.client }}</a></td>
+                    <td><a class="tag is-info" href= "">{{ ticket.category }}</a></td>
+                    <td><a class="tag is-info" href= "">{{ ticket.sub_category }}</a></td>
+                    <td><a  class="tag is-dark" href="">{{ ticket.status }}</a></td>
+                    <td><a  class="tag is-dark" href="">{{ ticket.date_added | timesince}}</a></td>
+                    <td><a  class="tag is-dark" href="">{{ ticket.ticket_owner }}</a></td>
+                    <td>{{ ticket.cat_name }}
+                        <a  class="tag is-primary" href="{% url 'ticket-detail' ticket.ticket_id %}">View</a>
+                        {% if ticket.ticket_owner == request.user or user.is_staff %}
+                            <a  class="tag is-info" href="{% url 'ticket-update' ticket.ticket_id %}">Update</a>
+                            <a  class="tag is-danger" href="{% url 'ticket-delete' ticket.ticket_id %}">Delete</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+        <span class="tag is-dark">Total tickets: {{ page_obj.paginator.count }} </span>
+
+{% else %}
+    <div class="notification is-info">
+        There are no <b>tickets</b> to <display></display> based on your filter(s).
+    </div>
+{% endif %}
+
+<!--for pagination-->
+{% if page_obj.paginator.num_pages > 1 %}
+    <nav class="pagination section" role="navigation" aria-label="pagination">
+        <ul class="pagination-list">
+            <li>
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}" class="pagination-previous">Previous</a>
+                {% endif %}
+            </li>
+            <li>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" class="pagination-next">Next page</a>
+                {% endif %}
+            </li>
+            <li>
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <li><a href="?page={{ num }}" class="pagination-link" aria-label="Goto page 1">{{ num }}</a></li>
+                    {% elif num > page_obj.number|add:-3 and num < page_obj.number|add:2 %}
+                        <li><a href="?page={{ num }}" class="pagination-link">{{ num }}</a></li>
+                    {% endif %}
+                {% endfor %}
+        </ul>
+    </nav>
+    </div>
+
+{% endif %}
+<!--end pagination-->

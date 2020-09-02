@@ -1,0 +1,489 @@
+{% extends "ticket/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+    <!----jquery-->
+    <script src="{% static 'js/chart.js' %}"></script>
+    <script src="{% static 'js/chart.js' %}"></script>
+
+
+
+
+    <div class="container is-fluid">
+
+        <section class="hero is-info welcome is-small">
+            <div class="hero-body">
+                <div class="container">
+                    <h1 class="title">
+                        Hello, {{first_name}}.
+                    </h1>
+                    <h2 class="subtitle">
+                        I hope you are having a great time!
+                    </h2>
+                </div>
+            </div>
+        </section>
+
+
+
+            <section class="info-tiles section">
+                <div class="tile is-ancestor has-text-centered">
+                {%  if user.profile.team %}
+                    <div class="tile is-parent" onclick="modalSwitcher('team-tickets-modal','')">
+                        <article class="tile is-child box">
+                            <p class="title">
+                                <img src="{% static 'icons/new-ticket.png' %}" class="is-pulled-left">{{ team_tickets.count}}</p>
+                            <p class="subtitle">Assigned to {{ user.profile.team }}</p>
+                        </article>
+                    </div>
+                {% endif %}
+                    <div class="tile is-parent" onclick="modalSwitcher('tickets-created-modal','')">
+                        <article class="tile is-child box">
+                            <p class="title">
+                                <img src="{% static 'icons/new-ticket.png' %}" class="is-pulled-left">{{ ticket_created_today.count}}</p>
+                            <p class="subtitle">Created today</p>
+                            {% for item in ticket_created_today %}
+                            {% endfor %}
+                        </article>
+                    </div>
+                    <div class="tile is-parent" onclick="modalSwitcher('tickets-closed-modal','')">
+                        <article class="tile is-child box">
+                            <p class="title">
+                                <img src="{% static 'icons/delete-ticket.png' %}" class="is-pulled-left">{{ ticket_closed_today.count}}<small> {{ ticket_closed_today.perc }}</small></p>
+                             <p class="subtitle">Closed today</p>
+                        </article>
+                    </div>
+                    <div class="tile is-parent" onclick="modalSwitcher('tickets-due-modal','')">
+                        <article class="tile is-child box">
+                            <p class="title">
+                                <img src="{% static 'icons/calendar-check.svg' %}" width="50" class="is-pulled-left">{{ ticket_due_today.count }}</p>
+                            <p class="subtitle">Due today</p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+        <hr/>
+
+
+
+
+        <!--charts-->
+
+        <!--tickets by client-->
+        {% if ticket_client %}
+            <div class="columns">
+
+                <div class="column section">
+                    <p class="title">Tickets by Client</p>
+                    <canvas class="box" id="clientTicketsChart" width="350" height="150" style="display: block; height: 150px; width: 150px;">
+                    </canvas>
+                    <table class="section table is-hoverable is-narrow is-fullwidth">
+                        <thead>
+                        <th>Client</th>
+                        <th align="center"># of tickets</th>
+                        </thead>
+                        {% for item in ticket_client %}
+                            <tr>
+                                <td>{{ item.clientname }}</td>
+                                <td align="center">{{ item.total }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="column section">
+                    <p class="title">Tickets by Product</p>
+                    <canvas class="box" id="productTicketsChart" width="350" height="150" style="display: block; height: 150px; width: 150px;">
+                    </canvas>
+                    <table class="table is-hoverable is-fullwidth">
+                        <thead>
+                        <th>Product</th>
+                        <th align="center"># of tickets</th>
+                        </thead>
+                        {% for item in ticket_product %}
+                            <tr>
+                                <td>{{ item.prodname }}</td>
+                                <td align="center">{{ item.total }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        {% endif %}
+      <hr/>
+
+
+
+        <!--tickets by products-->
+        {% if ticket_category %}
+            <div class="columns">
+                <div class="column section">
+                    <p class="title">Tickets by Category</p>
+                    <canvas class="box" id="categoryTicketsChart" width="350" height="150" style="display: block; height: 150px; width: 150px;">
+                    </canvas>
+                    <table class="table is-hoverable is-fullwidth">
+                        <thead>
+                        <th>Category</th>
+                        <th align="center"># of tickets</th>
+                        </thead>
+                        {% for item in ticket_category %}
+                            <tr>
+                                <td>{{ item.catname }}</td>
+                                <td align="center">{{ item.total }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            {% endif %}
+        {% if ticket_status %}
+                <div class="column section">
+                    <p class="title">Tickets by Status</p>
+                    <canvas class="box" id="statusTicketsChart" width="350" height="150" style="display: block; height: 150px; width: 150px;">
+                    </canvas>
+                    <table class="table is-hoverable is-fullwidth">
+                        <thead>
+                        <th>Category</th>
+                        <th align="center"># of tickets</th>
+                        </thead>
+                        {% for item in ticket_status %}
+                            <tr>
+                                <td>{{ item.statname }}</td>
+                                <td align="center">{{ item.total }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div><!--end columns-->
+        {% endif %}
+        <br/><hr/>
+        <!--end tickets by product-->
+    </div> <!--end container-->
+
+    <div class="modal" id="team-tickets-modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="modal-card-head">
+                <img src="{% static 'icons/object-group.svg' %}" width="30"/>
+                <p class="subtitle">
+                    &nbsp Tickets Assigned to {{ request.user.profile.team }}
+                </p>
+            </div>
+            <div class="modal-card-body">
+                {% if team_tickets %}
+                    <table class="table is-center is-fullwidth">
+                        <thead>
+                        <th>Code</th>
+                        <th>Last Update by</th>
+                        <th>SLA</th>
+                        </thead>
+                        {% for item in team_tickets %}
+                            <tr>
+                                <td><a href="ticket/{{item.ticket_id}}">{{ item.ticket_code }}</a></td>
+                                <td>{{ item.last_update_by }}</td>
+                                <td>{{ item.date_added | timesince}}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    <p>There are no tickets assigned to your team.</p>
+                {% endif %}
+            </div>
+            <div class="modal-card-foot">
+                <button class="button" aria-label="close" onclick="modalSwitcher('team-tickets-modal','tickets-team-modal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="tickets-due-modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="modal-card-head">
+                <img src="{% static 'icons/calendar-alt.svg' %}" width="30"/>
+                <p class="subtitle">
+                    &nbsp Tickets due today
+                </p>
+            </div>
+            <div class="modal-card-body">
+                {% if ticket_due_today %}
+                        <table class="table is-center is-fullwidth">
+                            <thead>
+                            <th>Code</th>
+                            <th>Owner</th>
+                            <th>SLA</th>
+                            </thead>
+                        {% for item in ticket_due_today %}
+                            <tr>
+                                <td><a href="ticket/{{item.ticket_id}}">{{ item.ticket_code }}</a></td>
+                                <td>{{ item.ticket_owner_id__team_name }}</td>
+                                <td>{{ item.date_added | timesince}}</td>
+                            </tr>
+                        {% endfor %}
+
+                        </table>
+                {% else %}
+                    <p>There are no tickets due today.</p>
+                {% endif %}
+            </div>
+            <div class="modal-card-foot">
+                <button class="button" aria-label="close" onclick="modalSwitcher('tickets-due-modal','tickets-due-modal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal" id="tickets-closed-modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="modal-card-head">
+                <img src="{% static 'icons/calendar-alt.svg' %}" width="30"/>
+                <p class="subtitle">
+                    &nbsp Tickets closed today
+                </p>
+            </div>
+            <div class="modal-card-body">
+                {% if ticket_closed_today %}
+                        <table class="table is-center is-fullwidth">
+                            <thead>
+                            <th>Code</th>
+                            <th>Owner</th>
+                            <th>SLA</th>
+                            </thead>
+                            {% for item in ticket_closed_today %}
+                                <tr>
+                                <td><a href="ticket/{{item.ticket_id}}">{{ item.ticket_code }}</a></td>
+                                <td>{{ item.ticket_owner_id__team_name }}</td>
+                                <td>{{ item.date_added | timesince}}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                {% else %}
+                    <p>No ticket(s) has been closed today.</p>
+                {% endif %}
+            </div>
+            <div class="modal-card-foot">
+                <button class="button" aria-label="close" onclick="modalSwitcher('tickets-closed-modal','')">Close</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal" id="tickets-created-modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="modal-card-head">
+                <img src="{% static 'icons/calendar-alt.svg' %}" width="30"/>
+                <p class="subtitle">
+                    &nbsp Tickets created today
+                </p>
+            </div>
+            <div class="modal-card-body">
+                {% if ticket_created_today %}
+                        <table class="table is-center is-fullwidth">
+                            <thead>
+                            <th>Code</th>
+                            <th>Owner</th>
+                            <th>Status</th>
+                            <th>Duration</th>
+                            </thead>
+                        {% for item in ticket_created_today %}
+                            <tr>
+                                <td><a href="ticket/{{item.ticket_id}}">{{ item.ticket_code }}</a></td>
+                                <td>{{ item.ticket_owner_id__team_name }}</td>
+                                <th>{{ item.status_id__stat_name }}</th>
+                                <td>{{ item.date_added | timesince}}</td>
+                            </tr>
+                        {% endfor %}
+                        </table>
+                {% else %}
+                    <p>No ticket(s) has been closed today.</p>
+                {% endif %}
+            </div>
+            <div class="modal-card-foot">
+                <button class="button" aria-label="close" onclick="modalSwitcher('tickets-created-modal','')">Close</button>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+        var client_labels = []
+        var client_data = []
+        {% for item in ticket_client %}
+            client_labels.push("{{item.clientname}}")
+            client_data.push("{{item.total}}")
+        {% endfor %}
+
+        var ctx = document.getElementById('clientTicketsChart');
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: client_labels,
+                datasets: [{
+                    label: '# of tickets',
+                    data: client_data,
+                    borderWidth: 1,
+                    backgroundColor: [
+                        '#003f5c',
+                        '#2f4b7c',
+                        '#665191',
+                        '#a05195',
+                        '#d45087',
+                        '#f95d6a',
+                        '#ff7c43',
+                        '#ffa600'
+                    ]
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+
+
+        {% if  ticket_product %}
+            var product_labels = []
+            var product_data = []
+            {% for item in ticket_product %}
+                product_labels.push("{{item.prodname}}")
+                product_data.push("{{item.total}}")
+            {% endfor %}
+
+            var product_ctx = document.getElementById('productTicketsChart');
+            var productChart = new Chart(product_ctx, {
+                type: 'bar',
+                data: {
+                    labels: product_labels,
+                    datasets: [{
+                        label: '# of tickets',
+                        data: product_data,
+                        borderWidth: 1,
+                        backgroundColor: [
+                            '#003f5c',
+                            '#2f4b7c',
+                            '#665191',
+                            '#a05195',
+                            '#d45087',
+                            '#f95d6a',
+                            '#ff7c43',
+                            '#ffa600'
+                        ],
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        {% endif %}
+
+        {% if  ticket_category %}
+            var product_labels = []
+            var product_data = []
+            {% for item in ticket_category %}
+                product_labels.push("{{item.catname}}")
+                product_data.push("{{item.total}}")
+            {% endfor %}
+
+            var product_ctx = document.getElementById('categoryTicketsChart');
+            var productChart = new Chart(product_ctx, {
+                type: 'pie',
+                data: {
+                    labels: product_labels,
+                    datasets: [{
+                        label: '# of tickets',
+                        data: product_data,
+                        borderWidth: 1,
+                        backgroundColor: [
+                            '#003f5c',
+                            '#2f4b7c',
+                            '#665191',
+                            '#a05195',
+                            '#d45087',
+                            '#f95d6a',
+                            '#ff7c43',
+                            '#ffa600'
+                        ],
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        {% endif %}
+
+
+        var status_labels = []
+        var status_data = []
+        {% for item in ticket_status %}
+            status_labels.push("{{item.statname}}")
+            status_data.push("{{item.total}}")
+        {% endfor %}
+
+        var status_ctx = document.getElementById('statusTicketsChart');
+        var statusChart = new Chart(status_ctx, {
+            type: 'bar',
+            data: {
+                labels: status_labels,
+                datasets: [{
+                    label: '# of tickets',
+                    data: status_data,
+                    borderWidth: 1,
+                    backgroundColor: [
+                        '#003f5c',
+                        '#2f4b7c',
+                        '#665191',
+                        '#a05195',
+                        '#d45087',
+                        '#f95d6a',
+                        '#ff7c43',
+                        '#ffa600'
+                    ],
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+
+    </script>
+
+{% endblock content %}

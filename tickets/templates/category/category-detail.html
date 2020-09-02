@@ -1,0 +1,45 @@
+{% extends "ticket/base.html" %}
+{% load static %}
+{% block content %}
+     <div class="container-fluid">
+     <br/>
+               <nav class="breadcrumb" aria-label="breadcrumbs">
+                 <ul>
+                     <li><a href="{% url 'category-list' %}">Categories</a></li>
+                     <li class="is-active"><a aria-current="page">{{ object.cat_name }}</a></li>
+                 </ul>
+             </nav>
+              <!-- Card -->
+             <div class="card   ">
+                 <header class="card-header">
+                     <p class="card-header-title title">
+                         {{ object.cat_name }}
+                     </p>
+                 </header>
+                 <div class="card-content">
+                     <div class="content">
+                         <p class="subtitle">{{ object.cat_description | slice:"2200" }}</p>
+                         <br>
+                         <time datetime="2016-1-1">{{ object.cat_date_added | date:"l, m/d/Y"}}</time>
+                         <br>
+                         <strong class="tag tag-info">{{ object.cat_status}}</strong>
+                     </div>
+                 </div>
+                 {% if request.user.is_staff %}
+                     <footer class="card-footer">
+                         <a href="{% url 'category-delete' object.cat_id %}" class="card-footer-item">Delete</a>
+                         <a href="{% url 'category-update' object.cat_id %}" class="card-footer-item">Edit</a>
+                     </footer>
+                 {% endif %}
+             </div>
+
+
+
+     </div>
+
+
+
+
+
+
+{% endblock content %}

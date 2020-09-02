@@ -1,0 +1,80 @@
+{% extends "ticket/base.html" %}
+{% load static %}
+{% block content %}
+<div class="container-fluid ">
+    {% if hotissue.count > 0 %}
+    <div class="section">
+        <a href="{% url 'hot-issue-create' %}" class="button is-success">
+            <img src="{% static 'icons/add-hand.png' %}" height="30" width="30"> New Hot-issue&nbsp</a>
+            <table class="table is-centered is-hoverable is-fullwidth">
+                {% if hotissue %}
+                <thead>
+                    <tr>
+                        <th scope="col" class="tbl-header">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Date Created</th>
+                        <th scope="col">Created by</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                     {% for hi in hotissue %}
+                     <tbody>
+                        <tr>
+                            <td><a href="{% url 'hot-issue-detail' hi.hi_id %}">{{ hi.hi_name }}</a></td>
+                            <td><a class= "" href= "">{{ hi.hi_description }}</a></td>
+                            <td><a class="tag is-info" href= "">{{ hi.hi_date_added | date:"m/d/Y" }}</a></td>
+                            <td><a class="tag is-info" href= "">{{ hi.hi_author }}</a></td>
+                             <td>
+                                <a  class="tag is-dark p-2" href="{% url 'hot-issue-detail' hi.hi_id %}">View</a>
+                            {% if request.user.is_staff %}
+                                <a  class="tag is-info p-2" href="{% url 'hot-issue-update' hi.hi_id %}">Update</a>
+                                <a  class="tag is-danger p-2" href="{% url 'hot-issue-delete' hi.hi_id %}">Delete</a>
+                            {% endif %}
+                            </td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                {% else %}
+                    <p class="display-5 alert alert-info">There are no Hot-issues to display right now. Click <a href="{% url 'hot-issue-create' %}" class="text-bold">here</a> to create one.</p>
+
+                {% endif %}
+            </table>
+            <span class="tag is-dark">Total hot-issues: {{ page_obj.paginator.count }} </span>
+        </div>
+        {% else %}
+        <div class="section">
+            <div class="notification is-info">
+                There are no <strong>hot-issues</strong> to display right now. Click
+                <a href="{% url 'hot-issue-create' %}" class="text">here</a> to create a ticket.
+            </div>
+        </div>
+            {% endif %}
+            <!--for pagination-->
+            {% if is_paginated %}
+                <nav class="pagination" role="navigation" aria-label="pagination">
+                    <ul class="pagination-list">
+                        <li>
+                            {% if page_obj.has_previous %}
+                                <a href="?page={{ page_obj.previous_page_number }}" class="pagination-previous">Previous</a>
+                            {% endif %}
+                        </li>
+                        <li>
+                            {% if page_obj.has_next %}
+                                <a href="?page={{ page_obj.next_page_number }}" class="pagination-next">Next page</a>
+                            {% endif %}
+                        </li>
+                        <li>
+                            {% for num in page_obj.paginator.page_range %}
+                                {% if page_obj.number == num %}
+                                    <li><a href="?page={{ num }}" class="pagination-link" aria-label="Goto page 1">{{ num }}</a></li>
+                                {% elif num > page_obj.number|add:-3 and num < page_obj.number|add:2 %}
+                                    <li><a href="?page={{ num }}" class="pagination-link">{{ num }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                    </ul>
+                </nav>
+            {% endif %}
+            <!--end pagination-->
+    </div>
+</div><!--end container-->
+{% endblock content %}

@@ -1,0 +1,78 @@
+{% extends "ticket/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="container-fluid">
+
+
+        <div class="section">
+            <p class="subtitle">Create a new User</p>
+        <form method="POST">
+            {% csrf_token %}}
+            <div class="tabs is-centered">
+                <ul>
+                    <li class="is-active">
+                        <a>
+                            <span class="icon is-small"><i class="fas fa-image" aria-hidden="true"></i></span>
+                            <span onclick="test()">Login information</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <span class="icon is-small"><i class="fas fa-music" aria-hidden="true"></i></span>
+                            <span onclick="test()">Personal Info</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            <span class="icon is-small"><i class="fas fa-film" aria-hidden="true"></i></span>
+                            <span>Contact Info</span>
+                        </a>
+                    </li>
+                </ul>
+                next
+            </div>
+
+                <div class="tab" id="credentials-tab">
+                    {{ u_form.email | as_crispy_field }}
+                    {{ u_form.password1 | as_crispy_field }}
+                    {{ u_form.password2 | as_crispy_field }}
+                </div>
+                <div class="tab" id="personal-details-tab" hidden>
+                    {{ u_form.first_name | as_crispy_field }}
+                    {{ p_form.middle_name | as_crispy_field }}
+                    {{ u_form.last_name | as_crispy_field }}
+                    {{ p_form.extension_name | as_crispy_field }}
+                    {{ p_form.nickname | as_crispy_field }}
+                    {{ p_form.birth_date | as_crispy_field }}
+                    {{ p_form.marital_status | as_crispy_field }}
+                    {{ p_form.gender | as_crispy_field }}
+                    {{ p_form.image | as_crispy_field }}
+                </div>
+                <div class="contact-info-tab tab" hidden>
+                    {{ p_form.phone_number | as_crispy_field }}
+                    {{ p_form.mobile_number | as_crispy_field }}
+                    {{ p_form.permanent_address | as_crispy_field }}
+                    {{ p_form.present_address | as_crispy_field }}
+                </div>
+         </form>
+
+<script>
+    function test(){
+        id1 = document.getElementById("credentials-tab")
+        id2 = document.getElementById("personal-details-tab")
+
+        if(id1.hidden === true){
+            id1.hidden = false
+            id2.hidden = true
+        }
+        else if(id1.hidden === false){
+            id1.hidden = true
+            id2.hidden = false
+        }
+
+    }
+</script>
+        </div>
+    </div><!--end container-->
+{% endblock content %}

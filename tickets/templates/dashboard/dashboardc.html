@@ -1,0 +1,124 @@
+{% extends "ticket/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+    <!----jquery-->
+    <script src="{% static 'js/chart.js' %}"></script>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="notification is-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% else %}
+    {% endif %}
+
+
+
+    <div class="container is-fluid">
+
+        <section class="hero is-info welcome is-small">
+            <div class="hero-body">
+                <div class="container">
+                    <h1 class="title">
+                        Hello, {{first_name}}.
+                    </h1>
+                    <h2 class="subtitle">
+                        I hope you are having a great time!
+                    </h2>
+                </div>
+            </div>
+        </section>
+        <br/>
+
+        {% if all_tickets %}
+            <section class="info-tiles">
+                <h2 class="title">Tickets by Client</h2>
+                <div class="tile is-ancestor has-text-centered">
+                    {% for item in ticket_client %}
+                        <div class="tile is-parent">
+                            <article class="tile is-child box">
+                                <p class="title">{{ item.total}}</p>
+                                <p class="subtitle">{{ item.clientname }}</p>
+                            </article>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+            <br/><hr/>
+        {% endif %}
+
+        {% if all_tickets %}
+            <section class="info-tiles">
+                <h2 class="title">Tickets by Category</h2>
+                <div class="tile is-ancestor has-text-centered">
+                    {% for item in all_tickets %}
+                        <div class="tile is-parent">
+                            <article class="tile is-child box">
+                                <p class="title">{{ item.total }}</p>
+                                <p class="subtitle">{{ item.catname}}</p>
+                            </article>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+            <br/><hr/>
+        {% endif %}
+
+        {% if ticket_product %}
+        <section class="info-tiles">
+            <h2 class="title">Tickets by Product</h2>
+            <div class="tile is-ancestor has-text-centered">
+                {% for item in ticket_product %}
+                    <div class="tile is-parent">
+                        <article class="tile is-child box">
+                            <p class="title">{{ item.total }}</p>
+                            <p class="subtitle">{{ item.prodname }}</p>
+                        </article>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+        <br/><hr/>
+        {% endif %}
+        {%  for item in ticket_product_open %}
+            {{ item.status__stat_name }}
+            {{ item.client__client_name }}
+            {{ item.product_id__prod_name }}
+            {{ item.total }}
+            <br/>
+        {% endfor %}
+        {%  for item in ticket_product_client %}
+            {{ item.status__stat_name }}
+            {{ item.client__client_name }}
+            {{ item.total }}
+            <br/>
+        {% endfor %}
+        {% if ticket_product %}
+        <section class="info-tiles">
+            <h2 class="title">Tickets by Status</h2>
+            <div class="tile is-ancestor has-text-centered">
+                {% for item in ticket_status %}
+                    <div class="tile is-parent">
+                        <article class="tile is-child box">
+                            <p class="title">{{ item.total }}</p>
+                            <p class="subtitle">{{ item.statname}}</p>
+                        </article>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+
+
+
+
+
+
+    </div> <!--end container-->
+
+
+
+{% endblock content %}

@@ -1,0 +1,31 @@
+{% extends "ticket/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        <br/>
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li class="breadcrumb-item text-primary"><a href="{% url 'team-list' %}">Teams</a></li>
+                {% if team.team_id %}
+                    <li class="breadcrumb-item text-primary"><a href="{% url 'team-detail' team.team_id %}">{{ team.team_name }}</a></li>
+                    <li class="breadcrumb-item" maxlength=7><a aria-current="page">Update  {{ team.team_name }}</a></li>
+                {% else %}
+                    <li class="breadcrumb-item active"><a aria-current="page">New Team</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+
+        <div class="columns box">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="column">
+
+                    {{ form | crispy }}
+                    <button class="button is-success" type="submit">Submit</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+{% endblock content %}

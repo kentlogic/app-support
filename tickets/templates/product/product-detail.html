@@ -1,0 +1,45 @@
+{% extends "ticket/base.html" %}
+{% load static %}
+{% block content %}
+    <div class="container-fluid">
+        <br/>
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a href="{% url 'product-list' %}">Products</a></li>
+                <li class="is-active"><a aria-current="page">{{ object.prod_name }}</a></li>
+            </ul>
+        </nav>
+        <!-- Card -->
+        <div class="card   ">
+            <header class="card-header">
+                <p class="card-header-title title">
+                    {{ object.prod_name }}
+                </p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <p class="subtitle">{{ object.prod_description | slice:"2200" }}</p>
+                    <br>
+                    <time datetime="2016-1-1">{{ object.prod_date_added | date:"l, m/d/Y"}}</time>
+                    <br>
+                    <strong class="tag tag-info">{{ object.prod_status}}</strong>
+                </div>
+            </div>
+            {% if request.user.is_staff %}
+                <footer class="card-footer">
+                    <a href="{% url 'product-delete' object.prod_id %}" class="card-footer-item">Delete</a>
+                    <a href="{% url 'product-update' object.prod_id %}" class="card-footer-item">Edit</a>
+                </footer>
+            {% endif %}
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+{% endblock content %}

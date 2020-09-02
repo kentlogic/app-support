@@ -1,0 +1,63 @@
+{% load static %}
+{% if modules.count > 0 %}
+        {% if modules %}
+            <table class="table is-centered is-hoverable is-fullwidth">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                        </tr>
+                </thead>
+                    {% for module in page_obj %}
+                     <tbody>
+                        <tr>
+                            <td><a href="{% url 'module-detail' module.mod_id %}">{{ module.mod_name }}</a></td>
+                            <td><a class="tag is-info" href= "">{{ module.product }}</a></td>
+                            <td><a  class="tag is-dark" href="">{{module.mod_status }}</a></td>
+                            <td>
+                                <a  class="tag is-dark p-2" href="{% url 'module-detail' module.mod_id %}">View</a>
+                                <a  class="tag is-info p-2" href="{% url 'module-update' module.mod_id %}">Update</a>
+                                <a  class="tag is-danger p-2" href="{% url 'module-delete' module.mod_id %}">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                {% else %}
+                    <p class="display-5 alert alert-info">There are no modules to display right now. Click <a href="{% url 'module-create' %}" class="card-link">here</a> to add a module.</p>
+                {% endif %}
+            </table>
+                <span class="tag is-dark">Module{{ page_obj.paginator.count | pluralize}}: {{ page_obj.paginator.count }} </span>
+        {% else %}
+    <div class="notification is-info">
+        There are no <b>modules</b> to display. Click <a href="{% url 'module-create' %}" class="card-link">here</a> to add a module.</p>
+    </div>
+        {% endif %}
+
+<!--for pagination-->
+{% if page_obj.paginator.num_pages > 1 %}
+    <nav class="pagination section" role="navigation" aria-label="pagination">
+        <ul class="pagination-list">
+            <li>
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}" class="pagination-previous">Previous</a>
+                {% endif %}
+            </li>
+            <li>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" class="pagination-next">Next page</a>
+                {% endif %}
+            </li>
+            <li>
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <li><a href="?page={{ num }}" class="pagination-link" aria-label="Goto page 1">{{ num }}</a></li>
+                    {% elif num > page_obj.number|add:-3 and num < page_obj.number|add:2 %}
+                        <li><a href="?page={{ num }}" class="pagination-link">{{ num }}</a></li>
+                    {% endif %}
+                {% endfor %}
+        </ul>
+    </nav>
+{% endif %}
+<!--end pagination-->

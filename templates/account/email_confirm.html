@@ -1,0 +1,37 @@
+{% extends "account/base.html" %}
+{% load static %}
+{% load account %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% block content %}
+    <article class="message is-info">
+        <div class="message-header">
+            <div class="container">
+                <h1 class="title has-text-white	">
+                    Infohub
+                </h1>
+                <h2 class="subtitle has-text-white	">
+                    Confirm E-mail Address
+                </h2>
+            </div>
+            <img src="{% static 'icons/success_check.png' %}" width="50">
+        </div>
+        <div class="message-body">
+            {% if confirmation %}
+                {% user_display confirmation.email_address.user as user_display %}
+
+                <p class="subtitle">{% blocktrans with confirmation.email_address.email as email %}Please confirm <a href="mailto:{{ email }}">{{ email }}</a> as your valid e-mail address.{% endblocktrans %}</p>
+
+                <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+                    {% csrf_token %}
+                    <button type="submit" class="is-success button">Confirm</button>
+                </form>
+
+            {% else %}
+                {% url 'account_email' as email_url %}
+                <p class="subtitle">This e-mail confirmation link expired or is invalid. Please <a href="{{ email_url }}">issue a new e-mail confirmation request</a>.</p>
+            {% endif %}
+        </div>
+    </article>
+{% endblock content %}
+

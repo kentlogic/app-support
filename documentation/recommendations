@@ -1,0 +1,44 @@
+Notification
+Filter by Client
+User account functionalities and user access
+Dashboard
+
+
+Ticketing System Workflow
+-Add tutorial walkthrough for initial setup
+
+
+Comments
+-Latest first
+
+
+Notifications
+-Ticket status change - trigger
+
+Product
+-add teams
+
+
+Status
+-Open
+-In progress
+-Awaiting Client
+-For Closing
+-Closed
+
+
+
+class Notification(models.Model):
+    notif_id = models.AutoField(primary_key=True)
+    notif_code = models.CharField(max_length=15, blank=True, default = f'notif{date.day}{date.month}{date.microsecond}', verbose_name='Code')
+    notif_name = models.CharField(max_length=50, blank=True, default='', verbose_name="Name")
+    notif_description = models.CharField(max_length=50, verbose_name="Description")
+    notif_user = models.ForeignKey(max_length=50, verbose_name="Description")
+    notif_status = models.IntegerField(default=1)
+    notif_date_added = models.DateTimeField(auto_now_add=True, blank=True)
+
+    def get_notif_code(self):
+        return self.get_notif_code()
+
+    def __str__(self):
+        return self.notif_name

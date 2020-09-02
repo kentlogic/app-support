@@ -1,0 +1,203 @@
+{% extends "ticket/base.html" %}
+{% load static %}
+{% block content %}
+<div class="container-fluid">
+
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.level == DEFAULT.MESSAGE.LEVELS.ERROR %}
+                <div class="modal is-active" id="upload-error-modal">
+                    <div class="modal-background"></div>
+                    <div class="modal-card">
+                        <header class="modal-card-head">
+                            <img src="{% static 'icons/svgs/solid/file-import.svg' %}" width="25">&nbsp
+                            <p class="modal-card-title">Corrupt or unreadable template</p>
+                        </header>
+                        <section class="modal-card-body">
+                            <!-- Content ... -->
+                            <small>
+                                {{ message }}
+                            </small>
+                            <hr/>
+                            <button class="button is-info" aria-label="download" onclick="download_csv()">
+                                <img src="{% static 'icons/svgs/solid/download.svg' %}" width="25">
+                                &nbspDownload the template</button>
+                            <button class="button is-success" aria-label="close" onclick="modalSwitcher('upload-error-modal')">Close</button>
+                        </section>
+                    </div>
+                </div>
+            {% else %}
+                <div class="notification" id="message-banner">
+                    <a class="delete"></a>
+                    {{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+
+
+
+
+
+    {% if tickets.count > 0  %}
+    <div class="section">
+    {% if user.is_staff %}
+        <a href="{% url 'ticket-create' %}" class="button is-success">
+            <img src="{% static 'icons/new-ticket.png' %}" height="30" width="30">&nbspNew Ticket</a>
+        <button onclick="modalSwitcher('batch-upload-modal')" class="button is-info">Batch Upload</button>
+    {% endif %}
+        <table class="table is-centered is-hoverable is-fullwidth">
+            <thead>
+            <tr>
+                <th scope="col" class="tbl-header">Title</th>
+                <th scope="col">Client</th>
+                <th scope="col">Category</th>
+                <th scope="col">Sub-Categqory</th>
+                <th scope="col">Status</th>
+                <th scope="col">Duration</th>
+                <th scope="col">Assigned to</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            {% for ticket in page_obj %}
+                <tbody>
+                    <tr>
+                        <td><a href="{% url 'ticket-detail' ticket.ticket_id %}">{{ ticket.title }}</a></td>
+                        <td><a class="tag is-info" href= "">{{ ticket.client }}</a></td>
+                        <td><a class="tag is-info" href= "">{{ ticket.category }}</a></td>
+                        <td><a class="tag is-info" href= "">{{ ticket.sub_category }}</a></td>
+                        <td><a  class="tag is-dark" href="">{{ ticket.status }}</a></td>
+                        <td><a  class="tag is-dark" href="">{{ ticket.date_added | timesince}}</a></td>
+                        <td><a  class="tag is-dark" href="">{{ ticket.ticket_owner }}</a></td>
+                        <td>{{ ticket.cat_name }}
+                            <a  class="tag is-primary" href="{% url 'ticket-detail' ticket.ticket_id %}">View</a>
+                            {% if ticket.ticket_owner == request.user or user.is_staff %}
+                                <a  class="tag is-info" href="{% url 'ticket-update' ticket.ticket_id %}">Update</a>
+                                <a  class="tag is-danger" href="{% url 'ticket-delete' ticket.ticket_id %}">Delete</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+        <span class="tag is-dark">Total tickets: {{ page_obj.paginator.count }} </span>
+    </div>
+    {% else %}
+    <div class="section">
+        <div class="notification is-info">
+            There are no <b>tickets</b> to display right now. Click
+            <a href="{% url 'ticket-create' %}" class="text"><strong>here</strong></a> to create a ticket or use
+            <strong class="text is-link" onclick="modalSwitcher('batch-upload-modal')">this form</strong></strong> to upload multiple tickets.
+        </div>
+    {% endif %}
+
+    <!--for pagination-->
+    {% if page_obj.paginator.num_pages > 1 %}
+    <nav class="pagination" role="navigation" aria-label="pagination">
+        <ul class="pagination-list">
+            <li>
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}" class="pagination-previous">Previous</a>
+                {% endif %}
+            </li>
+            <li>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" class="pagination-next">Next page</a>
+                {% endif %}
+            </li>
+            <li>
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <li><a href="?page={{ num }}" class="pagination-link" aria-label="Goto page 1">{{ num }}</a></li>
+                    {% elif num > page_obj.number|add:-3 and num < page_obj.number|add:2 %}
+                        <li><a href="?page={{ num }}" class="pagination-link">{{ num }}</a></li>
+                    {% endif %}
+                {% endfor %}
+        </ul>
+    </nav>
+    {% endif %}
+    <!--end pagination-->
+</div><!--end container-->
+
+
+    <div class="modal" id="batch-upload-modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <img src="{% static 'icons/svgs/solid/file-import.svg' %}" width="25">&nbsp
+                <p class="modal-card-title">Add multiple tickets</p>
+            </header>
+            <section class="modal-card-body">
+                <!-- Content ... -->
+                <h2 class="subtitle">
+                    Ensure the file being used is a CSV file.
+                </h2>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                        {{ form }}
+
+                    <footer class="modal-card-foot">
+                        <button  type="submit" class="button is-success is-disabled" disabled id="upload-button">Submit</button>
+                        <button onclick="download_csv()" class="button is-info">Download template</button>
+                        <button class="button"  onclick="modalSwitcher('batch-upload-modal')">Cancel</button>
+                    </footer>
+                </form>
+            </section>
+        </div>
+    </div>
+    </div>
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+                $notification = $delete.parentNode;
+
+                $delete.addEventListener('click', () => {
+                    $notification.parentNode.removeChild($notification);
+                });
+            });
+        });
+
+    var inp = document.getElementById("id_file")
+    inp.addEventListener('change', (event) => {
+        checkExtension()
+    });
+
+
+    function checkExtension(){
+        var uploaded_file = document.getElementById("id_file")
+        var file = uploaded_file.value.split("\\");  //get the file from input
+        var fileName = file[file.length-1];          //get the file name
+        var type = fileName.split('.')[1]           //get the extension
+        var uploadBtn = document.getElementById("upload-button")
+        //document.getElementById("fileLabel").innerHTML = fileName
+        if(type === "csv"){
+            console.log("type1" + type)
+            uploadBtn.attributes.removeNamedItem("disabled")
+        }
+        else{
+            console.log("type " + type.toString())
+            uploadBtn.setAttribute("disabled", true)
+        }
+    }
+
+
+    var data = ['Sample Title','Sample Description','clientcode123','CategoryCode123','Sub-categoryCode213','ProjectCode213','ProductCode13','ModuleCode213','StatusCode123','HotIssue Code','123','123'];
+
+    function download_csv() {
+        var csv = 'Title,Description,Client Code,Category Code,Sub-category Code,Project Code,Product Code,Module Code,Status Code,Hot Issue Code,Ticket Owner ID, Ticket Author ID\n';
+
+        console.log(csv);
+        var hiddenElement = document.createElement('a');
+        hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+        hiddenElement.target = '_blank';
+        hiddenElement.download = 'batch_upload.csv';
+        hiddenElement.click();
+    }
+
+    </script>
+
+{% endblock content %}

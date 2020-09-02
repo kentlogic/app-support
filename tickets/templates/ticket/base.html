@@ -1,0 +1,191 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="{% static 'images/blackbulls.jpg' %}" type="image/x-icon" href="{% static 'icons' %}" />
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+    <!-- bulma CSS -->
+    <link rel="stylesheet" href="{% static 'css/bulma.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+    <!-- Other CSS -->
+    <!-- Compressed CSS -->
+
+    <!-- Compressed JavaScript -->
+
+
+
+     <!----jquery-->
+{#    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>#}
+    <script src="{% static 'jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'js/utilities.js' %}"></script>
+
+    {% if title %}
+        <title>InfoHub - {{ title }}</title>
+    {% else %}
+        <title>InfoHub</title>
+    {% endif %}
+</head>
+<body>
+<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="">
+            <img src="{%  static 'images/allcard_tech.png' %}" width="112" height="28">
+        </a>
+
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <div id="navbarTop" class="navbar-menu">
+        <div class="navbar-start">
+            <!-- leave empty for now-->
+        </div>
+
+        <div class="navbar-end">
+            {% if user.is_authenticated %}
+                <a class="navbar-item ">
+                    <a class="navbar-link is-hidden">
+                        Notification
+                    </a>
+                </a>
+
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        {{ user.first_name }}
+                        {{ user.last_name }}
+                    </a>
+                    <div class="navbar-dropdown text-dark">
+                        <a href="{% url 'user-profile' %}" class="navbar-item">
+                            Profile
+                        </a>
+                        <a onclick="confirmLogout()" class="navbar-item">
+                            Logout
+                        </a>
+                    </div>
+                </div>
+        </div>
+
+
+
+                <figure class="image is-48x48">
+
+                </figure>
+            {% else %}
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a href="{% url 'account_signup' %}" class="button is-primary">
+                        Signup
+                    </a>
+                    <a href="{% url 'account_login' %}" class="button is-light">
+                        Log in
+                    </a>
+                </div>
+            </div>
+            <!--end of items when not logged in-->
+            {%  endif %}
+        </div>
+    </div>
+</nav>
+<script>
+ </script>
+
+     <div class="container-fluid columns is-mobile">
+        <div class="column is-2 is-centered section">
+                <aside class="menu">
+                    <p class="menu-label">
+                        General
+                    </p>
+                    <ul class="menu-list">
+                        <li><a href="{% url 'ticket-dashboard' %}">Dashboard</a></li>
+                        <li><a href="{% url 'status-list' %}">Status</a></li>
+                        <li><a href="{% url 'client-list' %}">Clients</a></li>
+                        <ul class="menu-list">
+                            <li><a href="{% url 'project-list' %}">Projects</a></li>
+                            <li>
+                                <a >Products</a>
+                                <ul>
+                                    <li><a href="{% url 'product-list' %}">List</a></li>
+                                    <li><a href="{% url 'module-list' %}">Modules</a></li>
+                                    <li><a href="{% url 'product-type-list' %}">Types</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <li>
+                            <a >Tickets</a>
+                            <ul>
+                                 <li><a href="{% url 'ticket-list' %}">List</a></li>
+                                {% if user.is_staff %}
+                                    <li><a href="{% url 'category-list' %}">Categories</a></li>
+                                <li><a href="{% url 'subcategory-list' %}">Sub-categories</a></li>
+                                <li><a href="{% url 'hot-issue-list' %}">Hot Issues</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p class="menu-label">
+                        Users
+                    </p>
+                    <ul class="menu-list">
+                        <li><a href="{% url 'user-list' %}">List</a></li>
+                        <li><a>Types</a></li>
+                        <li><a href="{% url 'team-list' %}">    Teams</a></li>
+                    </ul>
+                    <p class="menu-label">
+                        More
+                    </p>
+                    <ul class="menu-list">
+                        <li><a href="">About</a></li>
+                        <li><a>Feedback</a></li>
+                    </ul>
+                </aside>
+            {% endif %}
+        </div>
+         <!--content for other pages-->
+        <div class="column is-mobile">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+
+    <!--##################-->
+    <!--for logout modal-->
+    <!--##################-->
+
+    <div class="modal" id="logoutModal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <section class="modal-card-body">
+                <p class="subtitle">Are you sure you want to logout?
+                </p>
+            </section>
+            <footer class="modal-card-foot">
+                <a href="{% url 'account_logout' %}" class="button is-success">Yes</a>
+                <button onclick="confirmLogout()" class="button">Cancel</button>
+            </footer>
+        </div>
+    </div>
+
+    <!--##################-->
+</body>
+
+<script>
+    function confirmLogout(){
+        var logoutModal = document.getElementById('logoutModal')
+        if(logoutModal.classList.contains("is-active")){
+            logoutModal.classList.remove('is-active')
+        }
+        else{
+            logoutModal.classList.add("is-active")
+        }
+    }
+</script>
+</html>
+

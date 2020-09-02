@@ -1,0 +1,39 @@
+{% extends "ticket/base.html" %}
+{% load static %}
+{% block content %}
+    <div class="container-fluid">
+        <br/>
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a href="{% url 'project-list' %}">Project</a></li>
+                <li class="is-active"><a aria-current="page">{{ object.proj_name }}</a></li>
+            </ul>
+        </nav>
+        <!-- Card -->
+        <div class="card   ">
+            <header class="card-header">
+                <p class="card-header-title title">
+                    {{ object.proj_name }}
+                </p>
+
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <p class="subtitle">{{ object.proj_description | slice:"2200" }}</p>
+                    <p class="subtitle">{{ object.client | slice:"2200" }}</p>
+                    <p class="subtitle">{{ object.proj_manager | slice:"2200" }}</p>
+                    <br>
+                    <time datetime="2016-1-1">Created on {{ object.proj_date_added | date:"l, m/d/Y"}}</time>
+                    <br>
+                </div>
+            </div>
+            {% if request.user.is_staff %}
+                <footer class="card-footer">
+                    <a href="{% url 'project-delete' object.proj_id %}" class="card-footer-item">Delete</a>
+                    <a href="{% url 'project-update' object.proj_id %}" class="card-footer-item">Edit</a>
+                </footer>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock content %}

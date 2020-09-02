@@ -1,0 +1,42 @@
+{% extends "ticket/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+    <div class="col-10">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item text-primary"><a href="{% url 'subcategory-list' %}">Sub-categories</a></li>
+                     {% if subcategory.scat_id %}
+                        <li class="breadcrumb-item text-primary"><a href="{% url 'subcategory-detail' subcategory.scat_id %}">{{ subcategory.scat_name }}</a></li>
+                        <li class="breadcrumb-item active">Update {{ subcategory.scat_name }}</li>
+                     {% else %}
+                     <li class="breadcrumb-item active">New Sub-category</li>
+                    {% endif %}
+                </li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="col-10">
+        <div class="d-sm-flex just-content-center card p-3 content content-section">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">
+                        {% if not subcategory.scat_id %}
+                            New Sub-category
+                        {% else %}
+                            Update - {{ subcategory.scat_name }}
+                        {% endif %}
+                    </legend>
+                    {{ form | crispy }}
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-outline-info" type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+   
+
+ {% endblock content %}

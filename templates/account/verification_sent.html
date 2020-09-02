@@ -1,0 +1,26 @@
+{% extends "account/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% block content %}
+    <article class="message is-info">
+        <div class="message-header">
+            <div class="container">
+                <h1 class="title has-text-white	">
+                    Infohub
+                </h1>
+                <h2 class="subtitle has-text-white	">
+                    Verify Your E-mail Address
+                </h2>
+            </div>
+            <img src="{% static 'icons/success_check.png' %}" width="50">
+        </div>
+        <div class="message-body">
+            <p class="subtitle">
+                We have sent an e-mail to you for verification. Follow the link provided to
+                finalize the signup process. Please contact us if you do not receive it within a few minutes.
+            </p>
+            <a href="{% url 'account_login' %}" class="button is-success">Login here</a>
+        </div>
+    </article>
+{% endblock content %}

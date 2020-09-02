@@ -1,0 +1,62 @@
+{% load static %}
+        {% if subcategories %}
+            <table class="table is-centered is-hoverable is-fullwidth">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="tbl-header text-justify">Name</th>
+                            <th scope="col" class="text-justify">Description</th>
+                            <th scope="col" class="text-justify">Category</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        {% for subcategory in subcategories %}
+                            <tbody>
+                            <tr>
+                                <td class="text-justify"><a href="{% url 'subcategory-detail' subcategory.scat_id %}">{{ subcategory.scat_name }}</a></td>
+                                <td class="text-justify">{{ subcategory.scat_description }}</td>
+                                <td class="text-justify">{{ subcategory.category }}</td>
+                                <td><a class="tag is-info" href= "">{{ subcategory.scat_status }}</a></td>
+                                <td>
+                                    <a  class="tag is-dark p-2" href="{% url 'subcategory-detail' subcategory.scat_id %}">View</a>
+                                    {% if request.user.is_staff %}
+                                        <a  class="tag is-info p-2" href="{% url 'subcategory-update' subcategory.scat_id %}">Update</a>
+                                        <a  class="tag is-danger p-2" href="{% url 'subcategory-delete' subcategory.scat_id %}">Delete</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            </tbody>
+                        {% endfor %}
+                </table>
+                <span class="tag is-dark">Subcategor{{ page_obj.paginator.count | pluralize}}: {{ page_obj.paginator.count }} </span>
+                <!--for pagination-->
+                {% if page_obj.paginator.num_pages > 1 %}
+                    <nav class="pagination section" role="navigation" aria-label="pagination">
+                        <ul class="pagination-list">
+                            <li>
+                                {% if page_obj.has_previous %}
+                                    <a href="?page={{ page_obj.previous_page_number }}" class="pagination-previous">Previous</a>
+                                {% endif %}
+                            </li>
+                            <li>
+                                {% if page_obj.has_next %}
+                                    <a href="?page={{ page_obj.next_page_number }}" class="pagination-next">Next page</a>
+                                {% endif %}
+                            </li>
+                            <li>
+                                {% for num in page_obj.paginator.page_range %}
+                                    {% if page_obj.number == num %}
+                                        <li><a href="?page={{ num }}" class="pagination-link" aria-label="Goto page 1">{{ num }}</a></li>
+                                    {% elif num > page_obj.number|add:-3 and num < page_obj.number|add:2 %}
+                                        <li><a href="?page={{ num }}" class="pagination-link">{{ num }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                        </ul>
+                    </nav>
+                {% endif %}
+        {% else %}
+            <div class="notification is-info">
+                There are no <b>subcategories</b> to display. Click <a href="{% url 'subcategory-create' %}" class="card-link">here</a> to add a subcategory.</p>
+            </div>
+        {% endif %}
+<!--end pagination-->

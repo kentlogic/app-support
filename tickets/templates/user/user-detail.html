@@ -1,0 +1,49 @@
+{% extends "ticket/base.html" %}
+{% load static %}
+{% block content %}
+     <div class="container-fluid">
+        <div class="row justify-content-center">
+                <div class="col-12 mb-2">
+                        <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                  <li class="breadcrumb-item text-primary"><a href="{% url 'subcategory-list' %}">Sub-categories</a></li>
+                                  <li class="breadcrumb-item active" aria-current="page">{{ object.scat_name }}</li>
+                                </ol>
+                              </nav>
+                        <!-- Card -->
+                         <div class="card m-2 p-2">
+                            <div class="span-4">
+                                <div class="card-content">
+                                    <h5 class="card-title display-5 mb-1">
+                                        {{ object.scat_name }}
+                                    </h5>
+                                    <p class="card-text text-muted"><img class="img-fluid mx-auto p-1 mb-1" height="25px" src="{% static 'ticket/time24.svg' %}"/>
+                                    <small>{{ object.scat_date_added | date:"l, m/d/Y"}} <big class="badge badge-info m-2 p-1 float-right">{{ object.status }}</big>
+                                    </small>
+                                    </p>
+                                    <hr class="my-1 mx-2">
+                                    <p class="display-5 p-3">
+                                        {{ object.scat_description | slice:"2200" }}
+                                    </p>
+                                    <hr class="my-1 mt-2">
+                                    <div>
+                                        <span class="badge badge-pill badge-success p-2 m-2">
+                                            {{ object.scat_status }}
+                                        </span>
+                                        
+                                        {% if request.user.is_staff %}
+                                        <a class="badge badge-danger float-right m-2 p-2" href="{% url 'subcategory-delete' object.scat_id %}">
+                                            Delete
+                                        </a>
+                                        <a class="badge badge-info float-right m-2 p-2" href="{% url 'subcategory-update' object.scat_id %}">
+                                            Update
+                                        </a>
+                                        {% endif %}
+                                    </div> <!--end persons involved-->
+                                </div>
+                            </div> <!--end span-->
+                        </div> <!--end card-->
+                    </div> <!--end-->
+        </div>
+    </div>
+{% endblock content %}

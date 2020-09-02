@@ -1,0 +1,19 @@
+{% extends "ticket/base.html" %}
+{% load static %}
+{% block content %}
+    <div class="card p-3 m-3 content content-section">
+        <form method="POST">
+        {% csrf_token %}
+             <legend class="border-bottom mb-4">
+                    Archive Sub-Category
+                </legend>
+                <h5>Are you sure you want to archive Sub-Category - <b>{{ object.scat_name }}</b>?</h5>
+
+                 <button class="btn btn-outline-danger" type="submit">Yes, Archive</button>
+                <a  class="btn btn-outline-secondary" href="{% url 'subcategory-detail' object.scat_id %}">Cancel</a>
+        </form>
+    </div>
+
+   
+
+ {% endblock content %}

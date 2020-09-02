@@ -1,0 +1,68 @@
+{% extends "ticket/base.html" %}
+{% load static %}
+{% block content %}
+    <div class="container-fluid">
+    <hr/>
+        <!-- Main container -->
+        <nav class="level container">
+            <!-- Left side -->
+            <div class="level-left">
+                <div class="level-item">
+                    <div class="field has-addons">
+                        {% if user.is_staff %}<a href="{% url 'subcategory-create' %}" class="level-item button is-success">
+                        <img src="{% static 'icons/add-hand.png' %}" height="30" width="30">&nbspNew Hot-issue</a>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right side -->
+            <div class="level-right">
+
+            </div>
+        </nav>
+
+
+        {# artist-list section #}
+        <div id="replaceable-content" class="">
+            <table class="table is-centered is-hoverable is-fullwidth">
+                {% if hotissue %}
+                <thead>
+                    <tr>
+                        <th scope="col" class="tbl-header">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Duration</th>
+                        <th scope="col">Created by</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                     {% for hi in hotissue %}
+                     <tbody>
+                        <tr>
+                            <td><a href="{% url 'hot-issue-detail' hi.hi_id %}">{{ hi.hi_name }}</a></td>
+                            <td><a class= "" href= "">{{ hi.hi_description }}</a></td>
+                            <td><a class="tag is-info" href= "">{{ hi.hi_date_added | timesince}}</a></td>
+                            <td><a class="tag is-info" href= "">{{ hi.hi_author }}</a></td>
+                             <td>
+                                <a  class="tag is-dark p-2" href="{% url 'hot-issue-detail' hi.hi_id %}">View</a>
+                            {% if request.user.is_staff %}
+                                <a  class="tag is-info p-2" href="{% url 'hot-issue-update' hi.hi_id %}">Update</a>
+                                <a  class="tag is-danger p-2" href="{% url 'hot-issue-delete' hi.hi_id %}">Delete</a>
+                            {% endif %}
+                            </td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                {% else %}
+                    <p class="display-5 alert alert-info">There are no Hot-issues to display right now. Click <a href="{% url 'hot-issue-create' %}" class="text-bold">here</a> to create one.</p>
+
+                {% endif %}
+            </table>
+            <span class="tag is-dark">Total hot-issues: {{ page_obj.paginator.count }} </span>
+        </div>
+
+    </div><!--end container-->
+
+
+
+{% endblock content %}

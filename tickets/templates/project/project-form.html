@@ -1,0 +1,37 @@
+{% extends "ticket/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        <br/>
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li class="breadcrumb-item text-primary"><a href="{% url 'project-list' %}">Projects</a></li>
+                {% if project.proj_id %}
+                    <li class="breadcrumb-item text-primary"><a href="{% url 'project-detail' project.proj_id %}">{{ project.proj_name }}</a></li>
+                    <li class="breadcrumb-item" maxlength=7><a aria-current="page">Update {{ project.proj_name }}</a></li>
+                {% else %}
+                    <li class="breadcrumb-item active"><a aria-current="page">New Project</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+
+        <div class="columns">
+            <form method="POST" class="box">
+                {% csrf_token %}
+                {{ p_form | crispy }}
+                <button class="button is-success" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+        date = document.getElementById("id_proj_warranty_end")
+        date.classList.add("input")
+        date.classList.add("is-variable")
+        date.type = 'date'
+
+    </script>
+
+{% endblock content %}

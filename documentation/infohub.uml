@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>0ec2d194-74ed-4e41-a2c3-66af2e0e026c.SCHEMA:infohub_db.public</OriginalElement>
+  <nodes>
+    <node x="829.0106224966624" y="479.0">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_status</node>
+    <node x="1013.1261572901798" y="1230.0">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_product</node>
+    <node x="1495.62615729018" y="1207.0">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_project</node>
+    <node x="977.5" y="3024.0">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_yearlyreport</node>
+    <node x="58.0" y="882.5">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.account_emailconfirmation</node>
+    <node x="2771.87615729018" y="456.0">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_team</node>
+    <node x="2535.87615729018" y="525.0">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_customuser_groups</node>
+    <node x="80.0" y="502.0">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.account_emailaddress</node>
+    <node x="1301.0428239568464" y="2288.0">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_ticket</node>
+    <node x="201.5" y="3199.0">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.auth_group</node>
+    <node x="824.5043032472418" y="1879.0">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_hotissue</node>
+    <node x="1937.62615729018" y="871.0">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.socialaccount_socialtoken</node>
+    <node x="2230.37615729018" y="905.5">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.socialaccount_socialapp_sites</node>
+    <node x="2113.62615729018" y="490.5">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.socialaccount_socialapp</node>
+    <node x="669.5" y="3024.0">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.django_session</node>
+    <node x="2360.87615729018" y="525.0">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.django_site</node>
+    <node x="78.0" y="3351.0">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.auth_group_permissions</node>
+    <node x="1333.12615729018" y="825.0">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_client</node>
+    <node x="2.5" y="3176.0">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.auth_permission</node>
+    <node x="2362.37615729018" y="1959.5">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_comment</node>
+    <node x="465.5" y="1253.0">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_subcategory</node>
+    <node x="3164.37615729018" y="525.0">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_customuser_user_permissions</node>
+    <node x="2286.5059523809523" y="2831.0">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_ticketattachment</node>
+    <node x="387.5" y="3024.0">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.django_migrations</node>
+    <node x="1829.62615729018" y="479.0">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.socialaccount_socialaccount</node>
+    <node x="1010.3043032472417" y="1589.0">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_module</node>
+    <node x="314.0" y="848.0">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_category</node>
+    <node x="3481.37615729018" y="467.5">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_producttype</node>
+    <node x="2947.37615729018" y="756.0">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_profile</node>
+    <node x="0.0" y="3024.0">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.django_content_type</node>
+    <node x="1578.9043032472418" y="0.0">0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_customuser</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_ticket" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_team">
+      <point x="103.71428571428578" y="-246.5" />
+      <point x="1536.7571096711322" y="2258.0" />
+      <point x="2849.87615729018" y="2258.0" />
+      <point x="-78.0" y="120.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_ticket" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_category">
+      <point x="-103.71428571428578" y="-246.5" />
+      <point x="1329.3285382425606" y="2258.0" />
+      <point x="386.0" y="2258.0" />
+      <point x="-72.0" y="108.5" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_ticket" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_subcategory">
+      <point x="-84.85714285714289" y="-246.5" />
+      <point x="1348.1856810997035" y="2248.0" />
+      <point x="612.4999999999999" y="2248.0" />
+      <point x="0.0" y="120.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_module" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_status">
+      <point x="-99.0" y="-120.0" />
+      <point x="1059.8043032472417" y="1559.0" />
+      <point x="1002.6261572901798" y="1559.0" />
+      <point x="1002.6261572901798" y="736.0" />
+      <point x="993.8231224966624" y="736.0" />
+      <point x="18.3125" y="97.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_ticket" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_hotissue">
+      <point x="-47.14285714285711" y="-246.5" />
+      <point x="1385.8999668139893" y="2228.0" />
+      <point x="966.0043032472418" y="2228.0" />
+      <point x="0.0" y="154.5" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.socialaccount_socialapp_sites" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.django_site">
+      <point x="66.0" y="-51.0" />
+      <point x="2428.37615729018" y="736.0" />
+      <point x="2437.87615729018" y="736.0" />
+      <point x="0.0" y="51.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_ticketattachment" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_ticket">
+      <point x="-67.75" y="-74.0" />
+      <point x="2354.2559523809523" y="2806.0" />
+      <point x="1433.0428239568464" y="2806.0" />
+      <point x="0.0" y="246.5" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.socialaccount_socialtoken" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.socialaccount_socialapp">
+      <point x="63.5" y="-85.5" />
+      <point x="2128.12615729018" y="736.0" />
+      <point x="2167.62615729018" y="736.0" />
+      <point x="-54.0" y="85.5" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.auth_permission" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.django_content_type">
+      <point x="0.0" y="-62.5" />
+      <point x="0.0" y="51.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_ticket" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_customuser">
+      <point x="122.57142857142867" y="-246.5" />
+      <point x="1555.614252528275" y="2268.0" />
+      <point x="3153.87615729018" y="2268.0" />
+      <point x="3153.87615729018" y="356.0" />
+      <point x="1801.9387860058623" y="356.0" />
+      <point x="91.03448275862047" y="143.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_subcategory" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_customuser">
+      <point x="0.0" y="-120.0" />
+      <point x="612.4999999999999" y="336.0" />
+      <point x="1610.766372212759" y="336.0" />
+      <point x="-100.13793103448279" y="143.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_product" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_client">
+      <point x="112.125" y="-143.0" />
+      <point x="1274.75115729018" y="1187.0" />
+      <point x="1383.7928239568464" y="1187.0" />
+      <point x="-101.33333333333337" y="131.5" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_category" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_customuser">
+      <point x="-72.0" y="-108.5" />
+      <point x="386.0" y="326.0" />
+      <point x="1601.6629239368967" y="326.0" />
+      <point x="-109.24137931034488" y="143.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_project" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_customuser">
+      <point x="125.20000000000005" y="-166.0" />
+      <point x="1777.3261572901797" y="1187.0" />
+      <point x="1721.9043032472418" y="1187.0" />
+      <point x="1721.9043032472418" y="436.0" />
+      <point x="1720.0077515231037" y="436.0" />
+      <point x="9.103448275862092" y="143.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_ticket" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_product">
+      <point x="-9.428571428571558" y="-246.5" />
+      <point x="1423.6142525282748" y="2208.0" />
+      <point x="1361.239789163329" y="2208.0" />
+      <point x="1361.239789163329" y="1559.0" />
+      <point x="1262.2928239568464" y="1559.0" />
+      <point x="99.66666666666669" y="143.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_product" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_customuser">
+      <point x="-37.375" y="-143.0" />
+      <point x="1125.25115729018" y="1187.0" />
+      <point x="1156.5418724966626" y="1187.0" />
+      <point x="1156.5418724966626" y="376.0" />
+      <point x="1647.1801653162074" y="376.0" />
+      <point x="-63.72413793103442" y="143.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.socialaccount_socialapp_sites" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.socialaccount_socialapp">
+      <point x="-66.0" y="-51.0" />
+      <point x="2296.37615729018" y="736.0" />
+      <point x="2275.62615729018" y="736.0" />
+      <point x="54.0" y="85.5" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_client" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_status">
+      <point x="-114.0" y="-131.5" />
+      <point x="1371.12615729018" y="716.0" />
+      <point x="1103.6981224966626" y="716.0" />
+      <point x="128.1875" y="97.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_customuser_groups" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_customuser">
+      <point x="0.0" y="-51.0" />
+      <point x="2643.87615729018" y="406.0" />
+      <point x="1756.421544626552" y="406.0" />
+      <point x="45.517241379310235" y="143.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_comment" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_ticket">
+      <point x="81.5" y="74.0" />
+      <point x="2606.87615729018" y="2248.0" />
+      <point x="1517.8999668139893" y="2248.0" />
+      <point x="84.85714285714289" y="-246.5" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_hotissue" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_module">
+      <point x="113.19999999999999" y="-154.5" />
+      <point x="1079.2043032472418" y="1859.0" />
+      <point x="1084.5543032472417" y="1859.0" />
+      <point x="-74.25" y="120.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_hotissue" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_status">
+      <point x="0.0" y="-154.5" />
+      <point x="966.0043032472418" y="1859.0" />
+      <point x="957.8043032472417" y="1859.0" />
+      <point x="-18.3125" y="97.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_status" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_customuser">
+      <point x="0.0" y="-97.0" />
+      <point x="975.5106224966624" y="366.0" />
+      <point x="1638.076717040345" y="366.0" />
+      <point x="-72.82758620689651" y="143.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.account_emailconfirmation" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.account_emailaddress">
+      <point x="0.0" y="-74.0" />
+      <point x="0.0" y="74.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_module" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_customuser">
+      <point x="99.0" y="-120.0" />
+      <point x="1257.8043032472417" y="1569.0" />
+      <point x="1322.62615729018" y="1569.0" />
+      <point x="1322.62615729018" y="396.0" />
+      <point x="1665.3870618679312" y="396.0" />
+      <point x="-45.51724137931046" y="143.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_hotissue" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_product">
+      <point x="56.60000000000002" y="-154.5" />
+      <point x="1022.6043032472418" y="1859.0" />
+      <point x="999.8043032472417" y="1859.0" />
+      <point x="999.8043032472417" y="1569.0" />
+      <point x="1062.9594906235131" y="1569.0" />
+      <point x="-99.66666666666663" y="143.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.socialaccount_socialaccount" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_customuser">
+      <point x="0.0" y="-97.0" />
+      <point x="1961.62615729018" y="426.0" />
+      <point x="1738.214648074828" y="426.0" />
+      <point x="27.31034482758605" y="143.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_comment" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_customuser">
+      <point x="0.0" y="-74.0" />
+      <point x="2525.37615729018" y="416.0" />
+      <point x="1747.3180963506898" y="416.0" />
+      <point x="36.41379310344814" y="143.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.account_emailaddress" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_customuser">
+      <point x="0.0" y="-74.0" />
+      <point x="176.0" y="316.0" />
+      <point x="1592.5594756610349" y="316.0" />
+      <point x="-118.34482758620697" y="143.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.auth_group_permissions" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.auth_group">
+      <point x="52.0" y="-51.0" />
+      <point x="234.0" y="3326.0" />
+      <point x="272.0" y="3326.0" />
+      <point x="0.0" y="39.5" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_ticket" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_comment">
+      <point x="66.0" y="-246.5" />
+      <point x="1499.0428239568464" y="2238.0" />
+      <point x="2443.87615729018" y="2238.0" />
+      <point x="-81.5" y="74.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_team" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_customuser">
+      <point x="-104.0" y="-120.0" />
+      <point x="2823.87615729018" y="396.0" />
+      <point x="1765.524992902414" y="396.0" />
+      <point x="54.62068965517233" y="143.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_customuser_user_permissions" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_customuser">
+      <point x="0.0" y="-51.0" />
+      <point x="3312.37615729018" y="346.0" />
+      <point x="1811.0422342817242" y="346.0" />
+      <point x="100.13793103448256" y="143.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.auth_group_permissions" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.auth_permission">
+      <point x="-52.0" y="-51.0" />
+      <point x="130.0" y="3326.0" />
+      <point x="92.0" y="3326.0" />
+      <point x="0.0" y="62.5" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_profile" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_customuser">
+      <point x="49.0" y="-200.5" />
+      <point x="3094.37615729018" y="366.0" />
+      <point x="1792.8353377300004" y="366.0" />
+      <point x="81.9310344827586" y="143.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_subcategory" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_category">
+      <point x="-98.0" y="-120.0" />
+      <point x="514.5" y="1187.0" />
+      <point x="530.0" y="1187.0" />
+      <point x="72.0" y="108.5" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_ticket" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_status">
+      <point x="-66.0" y="-246.5" />
+      <point x="1367.0428239568464" y="2238.0" />
+      <point x="814.0043032472418" y="2238.0" />
+      <point x="814.0043032472418" y="736.0" />
+      <point x="920.5731224966624" y="736.0" />
+      <point x="-54.9375" y="97.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_ticketattachment" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_customuser">
+      <point x="67.75" y="-74.0" />
+      <point x="2489.7559523809523" y="2806.0" />
+      <point x="3470.87615729018" y="2806.0" />
+      <point x="3470.87615729018" y="336.0" />
+      <point x="1820.1456825575865" y="336.0" />
+      <point x="109.24137931034466" y="143.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_category" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_status">
+      <point x="72.0" y="-108.5" />
+      <point x="530.0" y="716.0" />
+      <point x="847.3231224966624" y="716.0" />
+      <point x="-128.1875" y="97.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_ticket" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_client">
+      <point x="9.428571428571331" y="-246.5" />
+      <point x="1442.4713953854177" y="2208.0" />
+      <point x="1485.12615729018" y="2208.0" />
+      <point x="0.0" y="131.5" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_ticket" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_module">
+      <point x="-28.28571428571422" y="-246.5" />
+      <point x="1404.7571096711322" y="2218.0" />
+      <point x="1233.0543032472417" y="2218.0" />
+      <point x="74.25" y="120.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_subcategory" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_status">
+      <point x="98.0" y="-120.0" />
+      <point x="710.5" y="1187.0" />
+      <point x="803.0043032472418" y="1187.0" />
+      <point x="803.0043032472418" y="726.0" />
+      <point x="883.9481224966624" y="726.0" />
+      <point x="-91.5625" y="97.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_profile" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_team">
+      <point x="-49.0" y="-200.5" />
+      <point x="2996.37615729018" y="736.0" />
+      <point x="3005.87615729018" y="736.0" />
+      <point x="78.0" y="120.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_project" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_client">
+      <point x="-62.59999999999991" y="-166.0" />
+      <point x="1589.52615729018" y="1187.0" />
+      <point x="1586.459490623513" y="1187.0" />
+      <point x="101.33333333333326" y="131.5" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_project" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_status">
+      <point x="-125.20000000000005" y="-166.0" />
+      <point x="1526.9261572901796" y="1177.0" />
+      <point x="1102.9617105374216" y="1177.0" />
+      <point x="1102.9617105374216" y="726.0" />
+      <point x="1067.0731224966626" y="726.0" />
+      <point x="91.5625" y="97.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_product" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_status">
+      <point x="-112.125" y="-143.0" />
+      <point x="1050.50115729018" y="1187.0" />
+      <point x="1091.9617105374216" y="1187.0" />
+      <point x="1091.9617105374216" y="736.0" />
+      <point x="1030.4481224966626" y="736.0" />
+      <point x="54.9375" y="97.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_hotissue" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_customuser">
+      <point x="-113.20000000000005" y="-154.5" />
+      <point x="852.8043032472417" y="1859.0" />
+      <point x="769.9999999999999" y="1859.0" />
+      <point x="769.9999999999999" y="346.0" />
+      <point x="1619.869820488621" y="346.0" />
+      <point x="-91.0344827586207" y="143.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_module" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_product">
+      <point x="0.0" y="-120.0" />
+      <point x="1158.8043032472417" y="1569.0" />
+      <point x="1162.62615729018" y="1569.0" />
+      <point x="0.0" y="143.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_client" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_customuser">
+      <point x="-38.0" y="-131.5" />
+      <point x="1447.12615729018" y="736.0" />
+      <point x="1490.0554605374216" y="736.0" />
+      <point x="1490.0554605374216" y="406.0" />
+      <point x="1674.4905101437935" y="406.0" />
+      <point x="-36.41379310344837" y="143.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.socialaccount_socialtoken" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.socialaccount_socialaccount">
+      <point x="-63.5" y="-85.5" />
+      <point x="2001.12615729018" y="736.0" />
+      <point x="1961.62615729018" y="736.0" />
+      <point x="0.0" y="97.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_producttype" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_customuser">
+      <point x="-83.25" y="-108.5" />
+      <point x="3564.62615729018" y="326.0" />
+      <point x="1829.2491308334484" y="326.0" />
+      <point x="118.34482758620675" y="143.0" />
+    </edge>
+    <edge source="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_ticket" target="0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.tickets_project">
+      <point x="28.28571428571422" y="-246.5" />
+      <point x="1461.3285382425606" y="2218.0" />
+      <point x="1652.12615729018" y="2218.0" />
+      <point x="0.0" y="166.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.36297149438525766" x="1386.184578792467" y="422.67555132476605" />
+  <SelectedNodes>
+    <node>0ec2d194-74ed-4e41-a2c3-66af2e0e026c.TABLE:infohub_db.public.users_customuser</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Key columns</Category>
+    <Category>Columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+

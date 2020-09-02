@@ -1,0 +1,31 @@
+{% extends "ticket/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+    <div class="container">
+    <br/>
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+            <li class="breadcrumb-item text-primary"><a href="{% url 'category-list' %}">Categories</a></li>
+            {% if category.cat_id %}
+                <li class="breadcrumb-item text-primary"><a href="{% url 'category-detail' category.cat_id %}">{{ category.cat_name }}</a></li>
+                <li class="breadcrumb-item" maxlength=7><a aria-current="page">Update</a></li>
+            {% else %}
+                <li class="breadcrumb-item active"><a aria-current="page">New Category</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <div class="columns">
+         <form method="POST" class="box">
+            {% csrf_token %}
+            <fieldset class="column">
+
+                {{ form | crispy }}
+                <button class="button is-success" type="submit">Submit</button>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+ {% endblock content %}

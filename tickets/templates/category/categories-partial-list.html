@@ -1,0 +1,62 @@
+{% load static %}
+        {% if categories %}
+            <table class="table is-centered is-hoverable is-fullwidth">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="tbl-header text-justify">Name</th>
+                            <th scope="col" class="text-justify">Description</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Date Created</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        {% for category in categories %}
+                            <tbody>
+                                <tr>
+                                    <td class="text-justify"><a href="{% url 'category-detail' category.cat_id %}">{{ category.cat_name }}</a></td>
+                                    <td class="text-justify">{{ category.cat_description }}</td>
+                                    <td><a class="tag is-info" href= "">{{ category.cat_status }}</a></td>
+                                    <td><a  class="tag is-dark" href="">{{ category.cat_date_added | date:"M d, Y"}}</a></td>
+                                    <td>
+                                        <a  class="tag is-dark p-2" href="{% url 'category-detail' category.cat_id %}">View</a>
+                                        {% if request.user.is_staff %}
+                                            <a  class="tag is-info p-2" href="{% url 'category-update' category.cat_id %}">Update</a>
+                                            <a  class="tag is-danger p-2" href="{% url 'category-delete' category.cat_id %}">Delete</a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        {% endfor %}
+                </table>
+                <span class="tag is-dark">Module{{ page_obj.paginator.count | pluralize}}: {{ page_obj.paginator.count }} </span>
+            <!--for pagination-->
+                {% if page_obj.paginator.num_pages > 1 %}
+                    <nav class="pagination section" role="navigation" aria-label="pagination">
+                        <ul class="pagination-list">
+                            <li>
+                                {% if page_obj.has_previous %}
+                                    <a href="?page={{ page_obj.previous_page_number }}" class="pagination-previous">Previous</a>
+                                {% endif %}
+                            </li>
+                            <li>
+                                {% if page_obj.has_next %}
+                                    <a href="?page={{ page_obj.next_page_number }}" class="pagination-next">Next page</a>
+                                {% endif %}
+                            </li>
+                            <li>
+                                {% for num in page_obj.paginator.page_range %}
+                                    {% if page_obj.number == num %}
+                                        <li><a href="?page={{ num }}" class="pagination-link" aria-label="Goto page 1">{{ num }}</a></li>
+                                    {% elif num > page_obj.number|add:-3 and num < page_obj.number|add:2 %}
+                                        <li><a href="?page={{ num }}" class="pagination-link">{{ num }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                        </ul>
+                    </nav>
+                {% endif %}
+                <!--end pagination-->
+        {% else %}
+            <div class="notification is-info">
+                <p class="display-5 alert alert-info">There are no categories to display right now. Click <a href="{% url 'category-create' %}" class="text-bold">here</a> to create a category.</p>
+            </div>
+        {% endif %}

@@ -1,0 +1,81 @@
+{% extends "ticket/base.html" %}
+{% load static %}
+{% block content %}
+    <div class="container-fluid">
+        {% if status.count > 0 %}
+        <div class="section">
+            <a href="{% url 'status-create' %}" class="button is-success">
+                <img src="{% static 'icons/add-hand.png' %}" height="30" width="30"> New Status&nbsp</a>
+            <table class="table is-centered is-hoverable is-fullwidth">
+                                        {% if status %}
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="tbl-header">Name</th>
+                                                <th scope="col">Description</th>
+                                                <th scope="col">Date Created</th>
+                                                <th scope="col">Created by</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                             {% for stat in status %}  
+                                             <tbody>                        
+                                                <tr>
+                                                    <td><a href="{% url 'status-detail' stat.stat_id %}">{{ stat.stat_name }}</a></td>
+                                                    <td><a class= "" href= "">{{ stat.stat_description }}</a></td>
+                                                    <td><a class="tag is-info" href= "">{{ stat.stat_date_added | date:"m/d/Y" }}</a></td>
+                                                    <td><a class="tag is-info" href= "">{{ stat.stat_author }}</a></td>
+                                                     <td>
+                                                        <a  class="tag is-dark p-2" href="{% url 'status-detail' stat.stat_id %}">View</a>
+                                                    {% if request.user.is_staff %}
+                                                        <a  class="tag is-info p-2" href="{% url 'status-update' stat.stat_id %}">Update</a>
+                                                        <a  class="tag is-danger p-2" href="{% url 'status-delete' stat.stat_id %}">Delete</a>
+                                                    {% endif %}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            {% endfor %}
+                                        {% else %}
+                                            <p class="display-5 alert alert-info">There are no status types to display right now. Click <a href="{% url 'status-create' %}" class="text-bold">here</a> to create a stat.</p>
+                                        {% endif %}
+
+            </table>
+            <span class="tag is-dark">Total status: {{ page_obj.paginator.count }} </span>
+        </div>
+        {% else %}
+            <div class="section">
+                <div class="notification is-info">
+                    There are no <strong>status</strong> to display right now. Click
+                    <a href="{% url 'status-create' %}" class="text">here</a> to create a status.
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <!--for pagination-->
+    {% if is_paginated %}
+        <nav class="pagination" role="navigation" aria-label="pagination">
+            <ul class="pagination-list">
+                <li>
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}" class="pagination-previous">Previous</a>
+                    {% endif %}
+                </li>
+                <li>
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}" class="pagination-next">Next page</a>
+                    {% endif %}
+                </li>
+                <li>
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == num %}
+                            <li><a href="?page={{ num }}" class="pagination-link" aria-label="Goto page 1">{{ num }}</a></li>
+                        {% elif num > page_obj.number|add:-3 and num < page_obj.number|add:2 %}
+                            <li><a href="?page={{ num }}" class="pagination-link">{{ num }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+            </ul>
+        </nav>
+    {% endif %}
+    <!--end pagination-->
+    </div><!--end container-->
+{% endblock content %}

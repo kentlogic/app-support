@@ -1,0 +1,342 @@
+{% extends "ticket/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+    <!----jquery-->
+    <script src="{% static 'js/chart.js' %}"></script>
+    <script src="{% static 'js/chart.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="notification is-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% else %}
+    {% endif %}
+
+
+
+    <div class="container is-fluid">
+
+        <section class="hero is-info welcome is-small">
+            <div class="hero-body">
+                <div class="container">
+                    <h1 class="title">
+                        Hello, {{first_name}}.
+                    </h1>
+                    <h2 class="subtitle">
+                        I hope you are having a great time!
+                    </h2>
+                </div>
+            </div>
+        </section>
+
+
+        <!--charts-->
+
+        <!--tickets by client-->
+        {% if ticket_client %}
+            <div class="columns">
+
+                <div class="column section">
+                    <p class="title">Tickets by Client</p>
+                    <canvas class="box" id="clientTicketsChart" width="350" height="150" style="display: block; height: 150px; width: 150px;">
+                    </canvas>
+                    <table class="section table is-hoverable is-narrow is-fullwidth">
+                        <thead>
+                        <th>Client</th>
+                        <th align="center"># of tickets</th>
+                        </thead>
+                        {% for item in ticket_client %}
+                            <tr>
+                                <td>{{ item.clientname }}</td>
+                                <td align="center">{{ item.total }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="column section">
+                    <p class="title">Tickets by Product</p>
+                    <canvas class="box" id="productTicketsChart" width="350" height="150" style="display: block; height: 150px; width: 150px;">
+                    </canvas>
+                    <table class="table is-hoverable is-fullwidth">
+                        <thead>
+                        <th>Product</th>
+                        <th align="center"># of tickets</th>
+                        </thead>
+                        {% for item in ticket_product %}
+                            <tr>
+                                <td>{{ item.prodname }}</td>
+                                <td align="center">{{ item.total }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        {% endif %}
+      <hr/>
+
+
+
+        <!--tickets by products-->
+        {% if ticket_category %}
+            <div class="columns">
+                <div class="column section">
+                    <p class="title">Tickets by Category</p>
+                    <canvas class="box" id="categoryTicketsChart" width="350" height="150" style="display: block; height: 150px; width: 150px;">
+                    </canvas>
+                    <table class="table is-hoverable is-fullwidth">
+                        <thead>
+                        <th>Category</th>
+                        <th align="center"># of tickets</th>
+                        </thead>
+                        {% for item in ticket_category %}
+                            <tr>
+                                <td>{{ item.catname }}</td>
+                                <td align="center">{{ item.total }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            {% endif %}
+        {% if ticket_status %}
+                <div class="column section">
+                    <p class="title">Tickets by Status</p>
+                    <canvas class="box" id="statusTicketsChart" width="350" height="150" style="display: block; height: 150px; width: 150px;">
+                    </canvas>
+                    <table class="table is-hoverable is-fullwidth">
+                        <thead>
+                        <th>Category</th>
+                        <th align="center"># of tickets</th>
+                        </thead>
+                        {% for item in ticket_status %}
+                            <tr>
+                                <td>{{ item.statname }}</td>
+                                <td align="center">{{ item.total }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div><!--end columns-->
+        {% endif %}
+        <br/><hr/>
+        <!--end tickets by product-->
+
+
+
+
+        {% if ticket_client_open %}
+            <section class="info-tiles">
+                <p class="subtitle">Open tickets</p>
+                <div class="tile is-ancestor has-text-centered">
+                    {% for item in ticket_client_open %}
+                        <div class="tile is-parent">
+                            <article class="tile is-child box">
+                                <p class="title">{{ item.total }}</p>
+                                <p class="subtitle">{{ item.clientname}} {{ item.status_name }}</p>
+                            </article>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+            <br/><hr/>
+        {% endif %}
+
+        {% if ticket_client_open %}
+            <section class="info-tiles">
+                <p class="subtitle">Closed tickets</p>
+                <div class="tile is-ancestor has-text-centered">
+                    {% for item in ticket_client_closed %}
+                        <div class="tile is-parent">
+                            <article class="tile is-child box">
+                                <p class="title">{{ item.total }}</p>
+                                <p class="subtitle">{{ item.clientname}} {{ item.status_name }}</p>
+                            </article>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+            <br/><hr/>
+        {% endif %}
+
+
+
+
+
+
+
+    </div> <!--end container-->
+
+
+    <script>
+
+
+
+        var client_labels = []
+        var client_data = []
+        {% for item in ticket_client %}
+            client_labels.push("{{item.clientname}}")
+            client_data.push("{{item.total}}")
+        {% endfor %}
+
+        var ctx = document.getElementById('clientTicketsChart');
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: client_labels,  
+                datasets: [{
+                    label: '# of tickets',
+                    data: client_data,
+                    borderWidth: 1,
+                    backgroundColor: [
+                        '#003f5c',
+                        '#2f4b7c',
+                        '#665191',
+                        '#a05195',
+                        '#d45087',
+                        '#f95d6a',
+                        '#ff7c43',
+                        '#ffa600'
+                    ]
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+
+
+
+        var product_labels = []
+        var product_data = []
+        {% for item in ticket_product %}
+            product_labels.push("{{item.prodname}}")
+            product_data.push("{{item.total}}")
+        {% endfor %}
+
+        var product_ctx = document.getElementById('productTicketsChart');
+        var productChart = new Chart(product_ctx, {
+            type: 'bar',
+            data: {
+                labels: product_labels,
+                datasets: [{
+                    label: '# of tickets',
+                    data: product_data,
+                    borderWidth: 1,
+                    backgroundColor: [
+                        '#003f5c',
+                        '#2f4b7c',
+                        '#665191',
+                        '#a05195',
+                        '#d45087',
+                        '#f95d6a',
+                        '#ff7c43',
+                        '#ffa600'
+                    ],
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+
+        var product_labels = []
+        var product_data = []
+        {% for item in ticket_category %}
+            product_labels.push("{{item.catname}}")
+            product_data.push("{{item.total}}")
+        {% endfor %}
+
+        var product_ctx = document.getElementById('categoryTicketsChart');
+        var productChart = new Chart(product_ctx, {
+            type: 'pie',
+            data: {
+                labels: product_labels,
+                datasets: [{
+                    label: '# of tickets',
+                    data: product_data,
+                    borderWidth: 1,
+                    backgroundColor: [
+                        '#003f5c',
+                        '#2f4b7c',
+                        '#665191',
+                        '#a05195',
+                        '#d45087',
+                        '#f95d6a',
+                        '#ff7c43',
+                        '#ffa600'
+                    ],
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+
+
+        var status_labels = []
+        var status_data = []
+        {% for item in ticket_status %}
+            status_labels.push("{{item.statname}}")
+            status_data.push("{{item.total}}")
+        {% endfor %}
+
+        var status_ctx = document.getElementById('statusTicketsChart');
+        var statusChart = new Chart(status_ctx, {
+            type: 'horizontalBar',
+            data: {
+                labels: status_labels,
+                datasets: [{
+                    label: '# of tickets',
+                    data: status_data,
+                    borderWidth: 1,
+                    backgroundColor: [
+                        '#003f5c',
+                        '#2f4b7c',
+                        '#665191',
+                        '#a05195',
+                        '#d45087',
+                        '#f95d6a',
+                        '#ff7c43',
+                        '#ffa600'
+                    ],
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+
+    </script>
+
+{% endblock content %}

@@ -1,0 +1,70 @@
+{% load static %}
+    {% if users.count > 0 %}
+    <div class="container-fluid">
+            <table class="table is-centered is-hoverable is-fullwidth">
+                <thead>
+                <tr>
+                    <th scope="col" class="tbl-header text-justify">Firstname</th>
+                    <th scope="col" class="text-justify">Lastname</th>
+                    <th scope="col" class="text-justify">Position</th>
+                    <th scope="col">Team</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                {% for user in users %}
+                    <tbody>
+                    <tr>
+                        <td class="text-justify"><a href="{% url 'user-detail' user.id %}">{{ user.first_name }}</a>
+                        </td>
+                        <td class="text-justify">{{ user.last_name }}</td>
+                        <td class="text-justify pill has-padding-1">{{ user.profile.get_profile_type }}</td>
+                        <td class="text-justify">{{ user.profile.team }}</td>
+                        <td>
+                            <a class="tag is-dark p-2" href="{% url 'user-detail' user.id %}">View</a>
+                            {% if request.user.is_staff %}
+                                <a class="tag is-info p-2" href="{% url 'user-update' user.id %}">Update</a>
+                                <a class="tag is-danger p-2" href="{% url 'user-delete' user.id %}">Delete</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    </tbody>
+                {% endfor %}
+            </table>
+
+        <span class="tag is-dark">Total tickets: {{ page_obj.paginator.count }} </span>
+
+{% else %}
+    <div class="notification is-info">
+                There are no users to display right now. Click
+                <a href="{% url 'user-create' %}" class="text">here</a> to create a user.
+    </div>
+{% endif %}
+
+<!--for pagination-->
+{% if page_obj.paginator.num_pages > 1 %}
+    <nav class="pagination section" role="navigation" aria-label="pagination">
+        <ul class="pagination-list">
+            <li>
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}" class="pagination-previous">Previous</a>
+                {% endif %}
+            </li>
+            <li>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" class="pagination-next">Next page</a>
+                {% endif %}
+            </li>
+            <li>
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <li><a href="?page={{ num }}" class="pagination-link" aria-label="Goto page 1">{{ num }}</a></li>
+                    {% elif num > page_obj.number|add:-3 and num < page_obj.number|add:2 %}
+                        <li><a href="?page={{ num }}" class="pagination-link">{{ num }}</a></li>
+                    {% endif %}
+                {% endfor %}
+        </ul>
+    </nav>
+    </div>
+
+{% endif %}
+<!--end pagination-->

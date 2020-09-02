@@ -1,0 +1,31 @@
+{% extends "ticket/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        <br/>
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li class="breadcrumb-item text-primary"><a href="{% url 'status-list' %}">Status</a></li>
+                {% if status.stat_id %}
+                    <li class="breadcrumb-item text-primary"><a href="{% url 'status-detail' status.stat_id %}">{{ status.stat_name }}</a></li>
+                    <li class="breadcrumb-item" maxlength=7><a aria-current="page">Update  {{ status.stat_name }}</a></li>
+                {% else %}
+                    <li class="breadcrumb-item active"><a aria-current="page">New Status</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+
+        <div class="columns box">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="column">
+
+                    {{ form | crispy }}
+                    <button class="button is-success" type="submit">Submit</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+{% endblock content %}

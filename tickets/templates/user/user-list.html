@@ -1,0 +1,102 @@
+{% extends "ticket/base.html" %}
+{% load static %}
+{% block content %}
+
+    <div class="container-fluid">
+    <h2 class="display-5">Users</h4>
+    <div class="row justify-content-center">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="input-group col-3 ">
+                                            <span>
+                                                <a href="{% url 'user-create' %}" class="float-right btn btn-success p-1">
+                                                <img src="{% static 'icons/add-hand.png' %}" height="30" width="30"> New User&nbsp</a>
+                                            </span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-12  p-3  rounded">
+                    <table class="table table-hover rounded shadow text-center">
+                        {% if useregories %}
+                            <thead>
+                            <tr>
+                                <th scope="col" class="tbl-header text-justify">Name</th>
+                                <th scope="col" class="text-justify">Description</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Date Created</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            {% for user in useregories %}
+                                <tbody>
+                                <tr>
+                                    <td class="text-justify"><a href="{% url 'user-detail' user.userID %}">{{ user.userName }}</a></td>
+                                    <td class="text-justify">{{ user.userDescription }}</td>
+                                    <td><a class="badge badge-info" href= "">{{ user.userStatus }}</a></td>
+                                    <td><a  class="badge badge-dark" href="">{{ user.userDate_added | date:"M d, Y"}}</a></td>
+                                    <td>
+                                        <a  class="badge badge-dark p-2" href="{% url 'user-detail' user.userID %}">View</a>
+                                        {% if request.user.is_staff %}
+                                            <a  class="badge badge-info p-2" href="{% url 'user-update' user.userID %}">Update</a>
+                                            <a  class="badge badge-danger p-2" href="{% url 'user-delete' user.userID %}">Delete</a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            {% endfor %}
+                        {% else %}
+                            <p class="display-5 alert alert-info">There are no sub-categories to display right now. Click <a href="{% url 'user-create' %}" class="text-bold">here</a> to create a User.</p>
+
+                        {% endif %}
+
+                    </table>
+                    <span class="display-5 badge badge-dark p-2">Total Users: {{ page_obj.paginator.count }} </span>
+
+                </div> <!--end col-->
+            </div> <!--end row-->
+        </div>
+
+
+
+    </div>
+    <div class="col-12 mt-2">
+        <ul class="pagination justify-content-center">
+            {% if is_paginated %}
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a href="?page=1" class="page-link">First</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="?page={{ page_obj.previous_page_number }}" class="page-link">Previous</a>
+                    </li>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <li class="page-item">
+                            <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+                        </li>
+
+                    {% elif num > page_obj.number|add:-3 and num < page_obj.number|add:2 %}
+                        <li class="page-item">
+                            <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <!--a href="?page={{ page_obj.paginator.num_pages }}" class="page-link">{{ page_obj.paginator.num_pages }}</a-->
+                    </li>
+                    <li class="page-item">
+                        <a href="?page={{ page_obj.next_page_number }}" class="page-link">Next</a>
+                    </li>
+                {% endif %}
+            {% endif %}
+        </ul>
+    </div>
+{% endblock content %}

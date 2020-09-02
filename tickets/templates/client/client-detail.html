@@ -1,0 +1,38 @@
+{% extends "ticket/base.html" %}
+{% load static %}
+{% block content %}
+    <div class="container-fluid">
+        <br/>
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a href="{% url 'client-list' %}">Client</a></li>
+                <li class="is-active"><a aria-current="page">{{ object.client_name }}</a></li>
+            </ul>
+        </nav>
+        <!-- Card -->
+        <div class="card   ">
+            <header class="card-header">
+                <p class="card-header-title title">
+                    {{ object.client_name }}
+                </p>
+
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <p class="subtitle is-4">{{ object.client_address | slice:"2200" }}</p>
+                    <p class="subtitle is-6">- {{ object.client_account_manager | slice:"2200" }}</p>
+                     <br>
+                    <b class="tag">{{ object.client_status | slice:"2200" }}</b> - <time datetime="2016-1-1">Created on {{ object.client_date_added | date:"l, m/d/Y"}}</time>
+                    <br>
+                </div>
+            </div>
+            {% if request.user.is_staff %}
+                <footer class="card-footer">
+                    <a href="{% url 'client-delete' object.client_id %}" class="card-footer-item">Delete</a>
+                    <a href="{% url 'client-update' object.client_id %}" class="card-footer-item">Edit</a>
+                </footer>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock content %}

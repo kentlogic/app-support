@@ -1,0 +1,218 @@
+{% extends "ticket/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+    <!----jquery-->
+    <script src="{% static 'js/chart.js' %}"></script>
+    <script src="{% static 'js/chart.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="notification is-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% else %}
+    {% endif %}
+
+
+
+    <div class="container is-fluid">
+
+        <section class="hero is-info welcome is-small">
+            <div class="hero-body">
+                <div class="container">
+                    <h1 class="title">
+                        Hello, {{first_name}}.
+                    </h1>
+                    <h2 class="subtitle">
+                        I hope you are having a great time!
+                    </h2>
+                </div>
+            </div>
+        </section>
+        <br/>
+
+
+        <!--charts-->
+
+
+        <!--tickets by client-->
+        {% if ticket_client %}
+            <section class="info-tiles">
+                <article class="tile is-child box">
+                    <br><br>
+                    <p class="title">Tickets by Client</p>
+                    <div class="content">
+                        <p></strong>.</p>
+                        <canvas id="clientTicketsChart" width="550" height="150" style="display: block; height: 150px; width: 150px;">
+                        </canvas>
+                    </div>
+                </article>
+            </section>
+            <br/><hr/>
+        {% endif %}
+        <!--end tickets by client-->
+
+
+        <!--tickets by client-->
+        {% if ticket_client %}
+            <section class="info-tiles">
+                <article class="tile is-child box">
+                    <br><br>
+                    <p class="title">Tickets by Client</p>
+                    <div class="content">
+                        <p></strong>.</p>
+                        <canvas id="productTicketsChart" width="550" height="150" style="display: block; height: 150px; width: 150px;">
+                        </canvas>
+                    </div>
+                </article>
+            </section>
+            <br/><hr/>
+        {% endif %}
+        <!--end tickets by client-->
+
+
+
+
+
+
+        {% if all_tickets %}
+            <section class="info-tiles">
+                <h2 class="subtitle">Tickets by Category</h2>
+                <div class="tile is-ancestor has-text-centered">
+                    {% for item in all_tickets %}
+                        <div class="tile is-parent">
+                            <article class="tile is-child box">
+                                <p class="title">{{ item.total }}</p>
+                                <p class="subtitle">{{ item.catname}}</p>
+                            </article>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+            <br/><hr/>
+        {% endif %}
+
+        {% if ticket_product %}
+        <section class="info-tiles">
+            <h2 class="subtitle">Tickets by Product</h2>
+            <div class="tile is-ancestor has-text-centered">
+                {% for item in ticket_product %}
+                    <div class="tile is-parent">
+                        <article class="tile is-child box">
+                            <p class="title">{{ item.total }}</p>
+                            <p class="subtitle">{{ item.prodname }}</p>
+                        </article>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+        <br/><hr/>
+        {% endif %}
+
+        {% if ticket_client_open %}
+            <section class="info-tiles">
+                <p class="subtitle">Open tickets</p>
+                <div class="tile is-ancestor has-text-centered">
+                    {% for item in ticket_client_open %}
+                        <div class="tile is-parent">
+                            <article class="tile is-child box">
+                                <p class="title">{{ item.total }}</p>
+                                <p class="subtitle">{{ item.clientname}} {{ item.status_name }}</p>
+                            </article>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+            <br/><hr/>
+        {% endif %}
+
+        {% if ticket_client_open %}
+            <section class="info-tiles">
+                <p class="subtitle">Closed tickets</p>
+                <div class="tile is-ancestor has-text-centered">
+                    {% for item in ticket_client_closed %}
+                        <div class="tile is-parent">
+                            <article class="tile is-child box">
+                                <p class="title">{{ item.total }}</p>
+                                <p class="subtitle">{{ item.clientname}} {{ item.status_name }}</p>
+                            </article>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+            <br/><hr/>
+        {% endif %}
+
+
+
+        {% if ticket_product %}
+        <section class="info-tiles">
+            <p class="subtitle">Tickets by Status</p>
+            <div class="tile is-ancestor has-text-centered">
+                {% for item in ticket_status %}
+                    <div class="tile is-parent">
+                        <article class="tile is-child box">
+                            <p class="title">{{ item.total }}</p>
+                            <p class="subtitle">{{ item.statname}}</p>
+                        </article>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+
+
+    </div> <!--end container-->
+
+
+    <script>
+
+        var client_labels = []
+        var client_data = []
+        {% for item in ticket_client %}
+            client_labels.push("{{item.clientname}}")
+            client_data.push("{{item.total}}")
+        {% endfor %}
+
+        var ctx = document.getElementById('clientTicketsChart');
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: client_labels,
+                datasets: [{
+                    label: '# of tickets',
+                    data: client_data,
+                    borderWidth: 1
+                }]
+            }
+        });
+
+
+
+
+        var product_labels = []
+        var product_data = []
+        {% for item in all_tickets %}
+            product_labels.push("{{item.catname}}")
+            product_data.push("{{item.total}}")
+        {% endfor %}
+
+        var product_ctx = document.getElementById('productTicketsChart');
+        var productChart = new Chart(product_ctx, {
+            type: 'line',
+            data: {
+                labels: product_labels,
+                datasets: [{
+                    label: '# of tickets',
+                    data: product_data,
+                    borderWidth: 1
+                }]
+            }
+        });
+
+    </script>
+{% endblock content %}

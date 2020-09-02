@@ -1,0 +1,103 @@
+{% extends "ticket/base.html" %}
+{% load static %}
+{% block content %}
+    <div class="container-fluid">
+    <hr/>
+        <!-- Main container -->
+        <nav class="level container">
+            <!-- Left side -->
+            <div class="level-left">
+                <div class="level-item">
+                    <div class="field has-addons">
+                        <div class="control">
+                            <p class="control has-icons-left">
+                                <input id="user-input" class="input" type="text" placeholder="Type here to search">
+                                <span class="icon is-small is-left">
+                                  <img src="{% static 'icons/search.svg' %}">
+                                </span>
+                            </p>
+                        </div>
+                        <p class="control has-icons-left">
+                            <span class="select">
+                              <select id="product-type-filter">
+                                <option selected>Name</option>
+                                <option>Client</option>
+                                <option>Status</option>
+                                <option>Manager</option>
+                              </select>
+                            </span>
+                            <span class="icon is-small is-left">
+                              <img src="{% static 'icons/filter.svg' %}" width="15">
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right side -->
+            <div class="level-right">
+                {% if user.is_staff %}
+                    <a href="{% url 'product-type-create' %}" class="level-item button is-success">
+                        <img src="{% static 'icons/add-hand.png' %}" height="30" width="30">&nbspNew Product type</a>
+                {% endif %}
+            </div>
+        </nav>
+
+
+        {# artist-list section #}
+        <div id="replaceable-content" class="">
+            {% include 'product_type/product-types-partial-list.html' %}
+        </div>
+
+    </div><!--end container-->
+
+
+
+
+    <script>
+
+    const user_input = $("#user-input")
+        const product_type_filter = $("#product-type-filter")
+        const search_icon = $('#search-icon')
+        const product_types_div = $('#replaceable-content')
+        const endpoint = '/product-type/list/'
+        const delay_by_in_ms = 700
+        let scheduled_function = false
+        console.log(product_type_filter.val())
+        let ajax_call = function (endpoint, request_parameters) {
+            $.getJSON(endpoint, request_parameters)
+                .done(response => {
+                    // fade out the product-types_div, then:
+                    product_types_div.fadeTo('slow', 0).promise().then(() => {
+                        // replace the HTML contents
+                        product_types_div.html(response['html_from_view'])
+                        // fade-in the div with new contents
+                        product_types_div.fadeTo('slow', 1)
+                        // stop animating search icon
+                        search_icon.removeClass('blink')
+                    })
+                })
+        }
+
+
+        user_input.on('keyup', function () {
+
+            const request_parameters = {
+                p: $(this).val(), // value of user_input: the HTML element with ID user-input
+                f: $('#product-type-filter :selected').val()
+            }
+            console.log(request_parameters)
+
+            // start animating the search icon with the CSS class
+            search_icon.addClass('blink')
+
+            // if scheduled_function is NOT false, cancel the execution of the function
+            if (scheduled_function) {
+                clearTimeout(scheduled_function)
+            }
+
+            // setTimeout returns the ID of the function to be executed
+            scheduled_function = setTimeout(ajax_call, delay_by_in_ms, endpoint, request_parameters)
+        })
+    </script>
+{% endblock content %}

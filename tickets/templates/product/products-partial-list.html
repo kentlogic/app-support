@@ -1,0 +1,68 @@
+{% load static %}
+    {% if products.count > 0 %}
+                <table class="table is-centered is-hoverable is-fullwidth">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text-justify">Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Manager</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                        {% for product in page_obj %}
+                     <tbody>
+                        <tr>
+                            <td class="text-justify"><a href="{% url 'product-detail' product.prod_id %}">{{ product.prod_name }}</a></td>
+                            <td class="text-justify">{{ product.prod_description | slice:"2200" }}</td>
+                            <td><a class="tag is-info" href= "">{{ product.prod_manager }}</a></td>
+                            <td><a  class="tag is-dark" href="">{{product.prod_status }}</a></td>
+                            <td>
+                                <a  class="tag is-dark p-2" href="{% url 'product-detail' product.prod_id %}">View</a>
+                            {% if request.user.is_staff %}
+                                <a  class="tag is-info p-2" href="{% url 'product-update' product.prod_id %}">Update</a>
+                                <a  class="tag is-danger p-2" href="{% url 'product-delete' product.prod_id %}">Delete</a>
+                            {% endif %}
+                            </td>
+                        </tr>
+                    </tbody>
+                        {% endfor %}
+                </table>
+                <span class="tag is-dark">Product{{ page_obj.paginator.count | pluralize}}: {{ page_obj.paginator.count }} </span>
+            </div>
+
+            <!--for pagination-->
+            {% if is_paginated %}
+                <nav class="pagination" role="navigation" aria-label="pagination">
+                    <ul class="pagination-list">
+                        <li>
+                            {% if page_obj.has_previous %}
+                                <a href="?page={{ page_obj.previous_page_number }}" class="pagination-previous">Previous</a>
+                            {% endif %}
+                        </li>
+                        <li>
+                            {% if page_obj.has_next %}
+                                <a href="?page={{ page_obj.next_page_number }}" class="pagination-next">Next page</a>
+                            {% endif %}
+                        </li>
+                        <li>
+                            {% for num in page_obj.paginator.page_range %}
+                                {% if page_obj.number == num %}
+                                    <li><a href="?page={{ num }}" class="pagination-link" aria-label="Goto page 1">{{ num }}</a></li>
+                                {% elif num > page_obj.number|add:-3 and num < page_obj.number|add:2 %}
+                                    <li><a href="?page={{ num }}" class="pagination-link">{{ num }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                    </ul>
+                </nav>
+            {% endif %}
+            <!--end pagination-->
+        {% else %}
+            <div class="section">
+                <div class="notification is-info">
+                    There are no <strong>products</strong> to display. Click
+                    <a href="{% url 'product-create' %}" class="text">here</a> to create a product.
+                </div>
+            </div>
+        {% endif %}
+

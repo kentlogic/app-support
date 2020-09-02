@@ -1,0 +1,112 @@
+{% extends "ticket/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+
+        {% for message in messages %}
+            <div class="notification is-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    <div class="card">
+        <div class="card-image hero is-dark">
+{#            <figure class="image">#}
+{#                //<img src="{% static 'images/ .jpg' %}"  class="is-16by9" alt="Placeholder">#}
+{#            </figure>#}
+        </div>
+        <div class="card-content">
+            <div class="media">
+                <div class="media-left">
+                    <figure class="image is-96x96">
+                        <img src="{{ user.profile.image.url }}" class="image is-rounded" alt="Profile image">
+                    </figure>
+                </div>
+                <div class="media-content">
+                    <p class="title is-4">{{ user.first_name }} {{ user.last_name }}<br/>
+                        <b class=" is-6 tag is-success">{{ user.profile.get_profile_type }}</b><br/>
+                        <b class=" is-6 tag is-info">{{ user.profile.team }}</b>
+                    </p>
+                </div>
+            </div>
+
+            <div class="content">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="columns">
+                        <div class="column">
+                            {{ u_form.first_name | as_crispy_field }}
+                        </div>
+                        <div class="column">
+                            {{ p_form.middle_name | as_crispy_field }}
+                        </div>
+                        <div class="column">
+                            {{ u_form.last_name | as_crispy_field }}
+                        </div>
+                        <div class="column">
+                            {{ p_form.extension_name | as_crispy_field }}
+                        </div>
+                        <div class="column">
+                            {{ p_form.nickname | as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="column">
+                            {{ p_form.marital_status | as_crispy_field }}
+                        </div>
+                        <div class="column">
+                            {{ p_form.gender | as_crispy_field }}
+                        </div>
+                        <div class="column">
+                            {{ p_form.birth_date| as_crispy_field }}
+                        </div>
+                        <div class="column">
+                            {{ p_form.phone_number | as_crispy_field }}
+                        </div>
+                        <div class="column">
+                            {{ p_form.mobile_number | as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="column is-6">
+                            {{ p_form.present_address | as_crispy_field }}
+                        </div>
+                        <div class="column is-6">
+                            {{ p_form.permanent_address | as_crispy_field }}
+                        </div>
+                    </div>
+
+                    <p class="subtitle">Profile picture -
+                        {{ p_form.image }}</p>
+
+                    <button class="button is-info" type="submit">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+    $(document).ready(function() {
+        var date = document.getElementById("id_birth_date")
+        var image =  document.getElementById("id_image")
+        var presentAddress =  document.getElementById("id_present_address")
+        var permanentAddress =  document.getElementById("id_permanent_address")
+
+        try{
+            date.classList.add("input")
+            date.classList.add("is-variable")
+            date.type = 'date'
+            image.classList.add("input")
+            image.style.width = "240px"
+            presentAddress.rows = "2"
+            permanentAddress.rows = "2"
+        }
+        catch (e) {
+            console.log(e)
+        }
+    })
+
+    </script>
+
+
+{% endblock content %}

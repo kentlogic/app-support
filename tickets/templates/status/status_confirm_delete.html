@@ -1,0 +1,35 @@
+{% extends "ticket/base.html" %}
+{% load static %}
+{% block content %}
+    <div class="container">
+    <br/>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="box">
+            <article class="media">
+                <div class="media-left">
+                    <figure class="image is-64x64">
+                        <img src="{% static 'icons/info-24px.svg' %}" alt="Image">
+                    </figure>
+                </div>
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+                            <strong> Delete Status</strong> <small></small>
+                            <br>
+                            Are you sure you want to delete status - <b>{{ object.stat_name }}?</b>
+                        </p>
+                    </div>
+                    <nav>
+                        <button class="button is-danger" type="submit">Yes, Delete</button>
+                        <a  class="button is-info" href="{% url 'status-detail' object.stat_id %}">Cancel</a>
+                    </nav>
+                </div>
+            </article>
+        </div>
+
+
+    </form>
+
+
+{% endblock content %}

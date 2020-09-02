@@ -1,0 +1,49 @@
+{% extends "ticket/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+    <div class="container-fluid">
+        <br/>
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li class="breadcrumb-item text-primary"><a href="{% url 'ticket-list' %}">Tickets</a></li>
+                {% if tickets %}
+                    <li class="breadcrumb-item text-primary"><a href="{% url 'ticket-detail' tickets.ticket_id%}">{{ tickets.title }}</a></li>
+                    <li class="breadcrumb-item" maxlength=7><a aria-current="page">Update {{ tickets.title }}</a></li>
+                {% else %}
+                    <li class="breadcrumb-item active"><a aria-current="page">New ticket</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+
+
+            <div class="column is-8">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="section">
+                        {{ t_form | crispy}}
+                    </div>
+
+                    <p class="subtitle">Attachments -
+                        {{ ta_form  | crispy }}</p>
+
+                    <button class="button is-info" type="submit">Update</button>
+                </form>
+            </div>
+
+            <div class="column is-2">
+                {% if attachments or pk %}
+                    <span class="subtitle">Attached files</span>
+                    {% for item in attachments %}
+                        <li><a href="https://127.0.0.1:8000/media/{{ item.file }}">{{ item.file }}</a></li>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+    </div> <!--end container-->
+
+
+
+ {% endblock content %}

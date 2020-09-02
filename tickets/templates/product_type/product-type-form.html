@@ -1,0 +1,32 @@
+{% extends "ticket/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        <br/>
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li class="breadcrumb-item text-primary"><a href="{% url 'product-type-list' %}">Product types</a></li>
+                {% if prod_type %}
+                    <li class="breadcrumb-item text-primary"><a href="{% url 'product-type-detail' prod_type.prod_type_id %}">{{ prod_type.prod_type_name }}</a></li>
+                    <li class="breadcrumb-item active"><a aria-current="page">Update</a></li>
+                {% else %}
+                    <li class="breadcrumb-item active"><a aria-current="page">New Product type</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+
+        <div class="columns">
+            <form method="POST" class="box">
+                {% csrf_token %}
+
+                    </legend>
+                    {{ p_form | crispy }}
+
+                 <button class="button is-success" type="submit">Submit</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+{% endblock content %}

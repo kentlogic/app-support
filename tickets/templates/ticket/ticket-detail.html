@@ -1,0 +1,345 @@
+{% extends "ticket/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+<div class="container-fluid">
+    <br/>
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+            <li><a href="{% url 'ticket-list' %}">Tickets</a></li>
+            <li class="is-active"><a aria-current="page">{{ ticket.title }}</a></li>
+        </ul>
+    </nav>
+
+    <div class="columns is-flex">
+            {% if comment %}
+            <div class="column">
+                    {% for item in page_obj %}
+                        <div class="box">
+                            <article class="media">
+                                <div class="media-left">
+                                    <figure class="image is-64x64">
+                                        <img class="is-rounded" src="{{ item.comment_user.profile.image.url }}" alt="Image">
+                                    </figure>
+                                </div>
+                                <div class="media-content">
+                                    <div class="content">
+                                        <p>
+                                            <strong>{{ item.comment_user.get_full_name }}</strong>
+                                            <small class="tag">{{ item.comment_user.profile.get_profile_type }}</small>
+                                            <small>{{ item.comment_date_added | timesince  }} ago</small>
+                                            {% if ticket.solution_id == item.comment_id %}
+                                                <strong class="is-pulled-right tag is-info">Marked as solution</strong>
+                                            {% endif %}
+                                            <br>
+                                            {{ item.comment_description | safe }}
+                                        </p>
+                                    </div>
+                                    <nav class="level is-mobile">
+                                        <div class="level-left">
+                                        {% if not ticket.solution %}
+                                            <a class="level-item" onclick="modalSwitcher('mark-answer-modal', '{{ item.comment_id }}')" aria-label="reply" >
+                                            <span class="icon is-small">
+                                               <img src="{%  static 'icons/check-circle.svg'%}"/>
+                                                </span>
+                                                &nbsp<strong>Mark as solution</strong>
+                                            </a>
+                                        {% endif %}{{ item.comment_description }}
+                                            {% if request.user == ticket.ticket_author %}
+{#                                                <a class="level-item" onclick='updateComment("update-comment-modal", "{{ item.comment_id }}","{{ item.comment_description | safe }}")'>#}
+{#                                                <span class="icon is-small">#}
+{#                                                <img src="{% static 'icons/edit.svg' %}" />#}
+{#                                                </span>#}
+{#                                                    &nbsp<strong>Update comment</strong>#}
+{#                                                </a>#}
+                                            {% endif %}
+                                            <a class="level-item" aria-label="like">
+                                            <span class="icon is-small">
+                                              <i class="fas fa-heart" aria-hidden="true"></i>
+                                            </span>
+                                            </a>
+                                        </div>
+                                    </nav>
+                                </div>
+                            </article>
+                        </div>
+                    {% endfor %}
+            {% endif %}
+
+            <!--for pagination-->
+        {% if page_obj.paginator.num_pages > 1 %}
+        <nav class="pagination" role="navigation" aria-label="pagination">
+                <ul class="pagination-list">
+                    <li>
+                        {% if page_obj.has_previous %}
+                            <a href="?page={{ page_obj.previous_page_number }}" class="pagination-previous">Previous</a>
+                        {% endif %}
+                    </li>
+                    <li>
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}" class="pagination-next">Next page</a>
+                        {% endif %}
+                    </li>
+                    <li>
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <li><a href="?page={{ num }}" class="pagination-link" aria-label="Goto page 1">{{ num }}</a></li>
+                            {% elif num > page_obj.number|add:-3 and num < page_obj.number|add:2 %}
+                                <li><a href="?page={{ num }}" class="pagination-link">{{ num }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                </ul>
+        </nav>
+        {% endif %}
+        <!--end pagination-->
+        </div>
+
+
+        <div class="column is-3">
+                <!-- Card -->
+                <div class="card ">
+                    <header class="card-header">
+                        <p class="card-header-title is-5 title">
+                            {{ ticket.title }}
+                        </p>
+                    </header>
+                    <div class="card-content">
+                        <div class="content">
+                                <table class="table is-hoverable">
+                                <table class="table is-hoverable">
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <strong>{{ ticket.ticket_code }}</strong>
+                                            <br>Code
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>{{ ticket.description | slice:"25" | safe}}</strong>
+                                            <br/>Description
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>{{ ticket.product | slice:"2200" }}</strong>
+                                            <br/>Product
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>{{ ticket.category | slice:"2200" }}</strong>
+                                            <br/>Category
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>{{ ticket.sub_category | slice:"2200" }}</strong>
+                                            <br/>Sub-category
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>{{ ticket.date_added | date:"l, m/d/Y"}}</strong>
+                                            <br/>Created on
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>{{ ticket.ticket_owner }}</strong>
+                                            <br/>Assigned to
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>{{ ticket.client}}</strong>
+                                            <br/>Client
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            {% if ticket.date_closed %}
+                                                <strong>{{ ticket.date_added|timesince:ticket.date_closed}}</strong>
+                                                <br/>SLA
+                                            {% else %}
+                                                <strong>{{ ticket.last_update|timesince}}</strong>
+                                                <br/>Duration
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong><span class="tag is-success">{{ ticket.status}}</span></strong>
+                                            <br/>Status
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>{{ ticket.hot_issue | slice:"2200" }}</strong>
+                                            <br/>Hot-issue
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        {% if attachment %}
+                                            <th class="is-2">Attachment
+                                                <br/>
+                                                <ul>
+                                                    {% for a in attachment %}
+                                                        <li><a href="{{ a.file.url }}" target="_blank">{{ a.file }}</a>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </th>
+                                        {% else %}
+                                            <th class="is-2">No attachments</th>
+                                        {% endif %}
+                                        </th>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                         </div>
+
+                    {% if not ticket.date_closed  and  request.user.is_staff or request.user.profile.team == ticket.ticket_owner %}
+                        <footer class="card-footer">
+                            <a href="{% url 'ticket-delete' ticket.ticket_id %}" class="card-footer-item">Delete</a>
+{#                            {% if %}#}
+                            <a href="{% url 'ticket-update' ticket.ticket_id %}" class="card-footer-item">Edit</a>
+{#                                {% endif %}#}
+                            <a onclick="modalSwitcher('post-comment-modal', 'comment')" class="card-footer-item">Comment</a>
+                        </footer>
+                    {% endif %}
+                </div>
+            </div> <!-- end the right detail card-->
+
+
+
+
+                    <div class="modal" id="update-comment-modal">
+                        <div class="modal-background"></div>
+                        <div class="modal-card">
+                            <header class="modal-card-head">
+                                <p class="modal-card-title">Update your comment</p>
+                            </header>
+                            <section class="modal-card-body">
+                                <!-- Content ... -->
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <p class="">
+                                        <input hidden class="input-id" name="input-field" id="comment-id">
+                                        <textarea class="input textarea" name="input-field" id="comment-desc"></textarea>
+                                    </p>
+                            </section>
+                            <section class="modal-card-foot">
+                                <button  type="submit" class="button is-success" name="mark-solution-button">Update</button>
+                                <a class="button" onclick="modalSwitcher('update-comment-modal', 'answer')">Cancel</a>
+                            </section>
+                            </form>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div class="modal" id="post-comment-modal">
+                        <div class="modal-background"></div>
+                        <div class="modal-card">
+                            <header class="modal-card-head">
+                                <p class="modal-card-title">Post a comment</p>
+                            </header>
+                            <section class="modal-card-body">
+                                <!-- Content ... -->
+                                <form method="POST">
+                                    <h2 class="subtitle">
+                                        {% csrf_token %}
+                                        {{ comment_form | crispy}}
+                                    </h2>
+                                    <p>
+                                        Ticket Satus:
+                                    <div class="field">
+                                        <div class="control">
+                                            <div class="select is-primary">
+                                                <select class="input" id="status" name="status" required="required">
+                                                    {% for item in status %}
+                                                        <option value="{{ item.stat_id }}">{{ item.stat_name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </p>
+                            </section>
+                            <section class="modal-card-foot">
+                                <button  type="submit" class="button is-success" id="post-comment-button">Submit</button>
+                                <a class="button" onclick="modalSwitcher('post-comment-modal', 'comment')">Cancel</a>
+                            </section>
+                            </form>
+                        </div>
+                    </div>
+
+
+
+                    <div class="modal" id="mark-answer-modal">
+                        <div class="modal-background"></div>
+                        <div class="modal-card">
+                            <header class="modal-card-head">
+                                <p class="modal-card-title">Mark comment as Solution</p>
+                            </header>
+                            <section class="modal-card-body">
+                                <!-- Content ... -->
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <p class="">
+                                        Marking the comment as the solution will mark the ticket as resolved.
+                                        <input hidden class="input-id" name="input-field" id="input-field">
+                                    </p>
+                            </section>
+                            <section class="modal-card-foot">
+                                <button  type="submit" class="button is-success" name="mark-solution-button">Continue</button>
+                                <a class="button" onclick="modalSwitcher('mark-answer-modal', 'answer')">Cancel</a>
+                            </section>
+                            </form>
+                        </div>
+                    </div>
+
+
+
+    <script>
+
+        function updateComment(modal_id, id, desc){
+            var modal = document.getElementById(modal_id);
+            var comment_id = document.getElementById("comment-id");
+            var comment_desc = document.getElementById("comment-desc");
+            comment_id.value = id;
+            comment_desc.value = desc;
+
+            if(modal.classList.contains("is-active")){
+                modal.classList.remove("is-active")
+            }
+            else{
+                modal.classList.add("is-active")
+            }
+        }
+
+        function modalSwitcher(id, input){
+            var modal = document.getElementById(id)
+            var comment_id = document.getElementById("input-field")
+            comment_id.value = input
+            console.log(input)
+
+            if(modal.classList.contains("is-active")){
+                modal.classList.remove("is-active")
+            }
+            else{
+                modal.classList.add("is-active")
+            }
+        }
+    </script>
+
+
+
+
+{% endblock content %}
